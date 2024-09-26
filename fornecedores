@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <string.h>
+void linha() {
+	printf("_________________________________________________\n");
+
+}
+
+void cadastro() {         //cadastrar produto
+	float id,cnpj,cep;
+	char nome[100],contato[100],email[100],tipo[100];
+
+	printf("Fale o numero do id\n");
+	scanf("%f",&id);
+	getchar();
+
+	printf("Fale o nome\n");
+	fgets(nome,sizeof(nome),stdin);
+
+
+	printf("Fale o cnpj\n");
+	scanf("%f",&cnpj);
+	getchar();
+
+	printf("Fale o contato\n");
+	fgets(contato,sizeof(contato),stdin);
+	
+
+	printf("Fale o email\n");
+	fgets(email,sizeof(email),stdin);
+	
+
+	printf("Fale o cep\n");
+	scanf("%f",&cep);
+	getchar();
+
+	printf("Fale o tipo\n");
+	fgets(tipo,sizeof(tipo),stdin);
+   
+}
+
+void tabela1() {       //Tabela principal
+	printf("|ID|");
+	printf("|NOME    |");
+	printf("|CNPJ|");
+	printf("|CONTATO|");
+	printf("|EMAIL|");
+	printf("|CEP|");
+	printf("|TIPO|");
+
+
+}
+
+
+int main()
+{
+
+	int numero;
+	printf("escolha a opcao\n");
+	scanf("%d",&numero);
+
+	switch(numero) {
+	case 1:
+		linha();
+		tabela1();
+		break;
+
+	case 2:
+		cadastro();
+		break;
+	}
+
+	strlen;
+
+	return 0;
+}

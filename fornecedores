@@ -148,11 +148,27 @@ if(existir){
     x.tipo[strcspn(x.tipo, "\n")] = 0; 
      return x;
 }
-produto cadproduto(produto prod[], int arrayprod){ //cadastrar os produtos
+produto cadproduto(produto prod[], int arrayprod,int arrayforne,inserir fornecedor[]){ //cadastrar os produtos
+ 
     produto y;
+    float prodfornecedor;
     int existi=0;
     int j;
-   
+    
+    printf("Em qual fornecedor voce ira cadastrar o produto?\n");
+ scanf("%f",&prodfornecedor); 
+
+  for(j=0;j<prodfornecedor;j++){
+if(fornecedor[j].id !=prodfornecedor){
+    printf("Nenhum id localizado \n");
+
+  
+    
+}
+}
+
+
+   getchar();
     printf("Escreva o id do produto\n");
     scanf("%f",&y.id);
      for(j=0;j<arrayprod;j++){
@@ -162,6 +178,7 @@ produto cadproduto(produto prod[], int arrayprod){ //cadastrar os produtos
             break;
         }
     }
+    
     if(existi){
         printf("ID ja existente cadastre outro\n");
         printf("Escreva o id do produto\n");
@@ -268,13 +285,15 @@ do{
 		printf("\n");
 		break;
 case 3:
- 
-prod[arrayprod++]=cadproduto(prod, arrayprod);
+
+prod[arrayprod++]=cadproduto(prod, arrayprod,arrayforne, fornecedor);
 printf("\n");
 break;
 
 case 4:
 linha();
+	subtabela(fornecedor[i]);
+	
 tabela2();
 printf("\n");
 for(j=0;j<arrayprod;j++){

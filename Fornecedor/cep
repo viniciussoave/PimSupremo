@@ -1,0 +1,18 @@
+#include <stdio.h>
+void cepcerto( char *cep){
+    char cep1[13];
+    snprintf(cep1,sizeof(cep1),"%c%c%c%c%c-%c%c%c",
+    cep[0],cep[1],cep[2],cep[3],cep[4],
+    cep[5],cep[6],cep[7]);
+    printf(" %s",cep1);
+}
+
+int main(){
+   char cepp[14];
+   printf("escreva o cep");
+   scanf(" %s",cepp);
+   cepcerto(cepp);
+   
+    
+    return 0;
+}

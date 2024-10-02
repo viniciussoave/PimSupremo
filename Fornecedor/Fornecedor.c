@@ -212,12 +212,12 @@ return y;
 }
 
 void tabela1() {       //Tabela principal
-	printf("|ID|");
-	printf("|NOME    |");
-	printf("|CNPJ|");
-	printf("|CONTATO|");
-	printf("|EMAIL|");
-	printf("|CEP|");
+	printf("|ID ");
+	printf("|NOME    ");
+	printf("|CNPJ");
+	printf("|CONTATO");
+	printf("|EMAIL");
+	printf("|CEP");
 	printf("|TIPO|");
 
 }
@@ -228,8 +228,8 @@ void subproduto(produto y){ // os dados dos produtos
 }
 
 void subtabela(inserir x){ //os dados dos fornecedores
-   
-     printf("|%.f|%s|%s|%s|%s|%s|%s|\n", x.id, x.nome, x.cnpj, x.contato,
+  
+     printf("|%3.f|%s|%s|%s|%s|%s|%s|\n", x.id, x.nome, x.cnpj, x.contato,
            x.email, x.cep, x.tipo);
     
 }

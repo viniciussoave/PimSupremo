@@ -1,0 +1,24 @@
+#include <stdio.h>
+void cnpjvoid( char *cnpj){
+    char cnpjcerto[20];
+    snprintf(cnpjcerto, sizeof(cnpjcerto), "%c%c.%c%c%c.%c%c%c/%c%c%c%c-%c%c",
+     cnpj[0],cnpj[1],
+     cnpj[2],cnpj[3],cnpj[4],
+     cnpj[5],cnpj[6],cnpj[7],
+     cnpj[8],cnpj[9],cnpj[10],cnpj[11],
+     cnpj[12],cnpj[13]);
+    printf("%s",cnpjcerto);
+    
+}
+int main()
+{
+    
+    char cnpj2[20];
+    printf("escreva o cpnj apenas numeros(14)");
+    scanf(" %s",cnpj2);
+    cnpjvoid(cnpj2);
+ ;
+    
+
+    return 0;
+}

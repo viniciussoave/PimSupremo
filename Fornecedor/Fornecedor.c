@@ -211,9 +211,15 @@ scanf("%f",&y.desconto);
 return y;
 }
 
-void tabela1() {       //Tabela principal
+void tabela1(inserir x) {       //Tabela principal
+int l;
+int k=strlen(x.nome);
 	printf("|ID ");
-	printf("|NOME");
+printf("|NOME");
+for(l=4;l<k;l++){
+  printf(" ");  
+ 
+}
 	printf("|CNPJ              ");
 	printf("|CONTATO       ");
 	printf("|EMAIL");
@@ -256,7 +262,16 @@ void subproduto(produto y){ // os dados dos produtos
 
 
 void subtabela(inserir x ){ //os dados dos fornecedores
- printf("|%3.f|%s|",x.id, x.nome);
+ int l;
+ printf("|%3.f|",x.id);
+ printf("%s",x.nome);
+ 
+ for(l=4;l>strlen(x.nome);l--){
+    
+     printf(" ");
+}
+printf("|");
+
  cnpjvoid(x.cnpj);
  telefone(x.contato);
  printf("|%s",x.email);
@@ -309,7 +324,7 @@ do{
 	break;
 	case 2:
 		linha();
-		tabela1();
+		tabela1(fornecedor[i]);
 		printf("\n");
 		for(i=0;i<arrayforne;i++){
 		subtabela(fornecedor[i]);

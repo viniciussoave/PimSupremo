@@ -222,7 +222,7 @@ void tabela1() {       //Tabela principal
 
 }
 
-void cnpjvoid( char *cnpj){
+void cnpjvoid( char *cnpj){ //formatacao do cnpj
     char cnpjcerto[20];
     snprintf(cnpjcerto, sizeof(cnpjcerto), "%c%c.%c%c%c.%c%c%c/%c%c%c%c-%c%c",
      cnpj[0],cnpj[1],
@@ -230,20 +230,38 @@ void cnpjvoid( char *cnpj){
      cnpj[5],cnpj[6],cnpj[7],
      cnpj[8],cnpj[9],cnpj[10],cnpj[11],
      cnpj[12],cnpj[13]);
-    printf("%s",cnpjcerto);
+    printf("%s|",cnpjcerto);
     
 }
 
+void telefone(char *tele){//formatacao do contato
+    char tele1[18];
+    snprintf(tele1,sizeof(tele1),"(%c%c)%c%c%c%c%c-%c%c%c%c",
+   tele[0],tele[1],
+   tele[2],tele[3],tele[4],tele[5],tele[6],
+   tele[7],tele[8],tele[9],tele[10]);
+   printf("%s",tele1);
+}
 void subproduto(produto y){ // os dados dos produtos
     printf("|%.f|%s|%.2f|%.2f|%.2f|%.2f|%.2f|",y.id,y.nproduto,y.qtd,y.unidade,
     y.frete,y.desconto,y.valortotal);
 }
 
+void cepcerto( char *cep){ //formatacao cep
+    char cep1[13];
+    snprintf(cep1,sizeof(cep1),"%c%c%c%c%c-%c%c%c",
+    cep[0],cep[1],cep[2],cep[3],cep[4],
+    cep[5],cep[6],cep[7]);
+    printf(" |%s",cep1);
+}
 void subtabela(inserir x ){ //os dados dos fornecedores
  printf("|%3.f|%s|",x.id, x.nome);
  cnpjvoid(x.cnpj);
-     printf("|%s|%s|%s|%s|\n", x.contato,
-           x.email, x.cep, x.tipo);
+ telefone(x.contato);
+ printf("|%s",x.email);
+ cepcerto(x.cep);
+     printf("|%s|\n", 
+         x.tipo);
     
 }
 

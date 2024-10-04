@@ -222,14 +222,27 @@ void tabela1() {       //Tabela principal
 
 }
 
+void cnpjvoid( char *cnpj){
+    char cnpjcerto[20];
+    snprintf(cnpjcerto, sizeof(cnpjcerto), "%c%c.%c%c%c.%c%c%c/%c%c%c%c-%c%c",
+     cnpj[0],cnpj[1],
+     cnpj[2],cnpj[3],cnpj[4],
+     cnpj[5],cnpj[6],cnpj[7],
+     cnpj[8],cnpj[9],cnpj[10],cnpj[11],
+     cnpj[12],cnpj[13]);
+    printf("%s",cnpjcerto);
+    
+}
+
 void subproduto(produto y){ // os dados dos produtos
     printf("|%.f|%s|%.2f|%.2f|%.2f|%.2f|%.2f|",y.id,y.nproduto,y.qtd,y.unidade,
     y.frete,y.desconto,y.valortotal);
 }
 
-void subtabela(inserir x){ //os dados dos fornecedores
-  
-     printf("|%3.f|%s|%s|%s|%s|%s|%s|\n", x.id, x.nome, x.cnpj, x.contato,
+void subtabela(inserir x ){ //os dados dos fornecedores
+ printf("|%3.f|%s|",x.id, x.nome);
+ cnpjvoid(x.cnpj);
+     printf("|%s|%s|%s|%s|\n", x.contato,
            x.email, x.cep, x.tipo);
     
 }

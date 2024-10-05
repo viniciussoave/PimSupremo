@@ -26,11 +26,12 @@ void espacamento(int karray[],int p){
    
   for (int i = 0; i < p; i++) {
         int k = karray[i];
-
-      
+if(k<=karray[i]){
         for (int l = 4; l < k; l++) {
             printf(" ");  
         }
+}
+    
 }
 }
 

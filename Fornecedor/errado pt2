@@ -23,7 +23,14 @@ typedef struct{   // variaveis dos fornecedores
 }inserir;
 
 void espacamento(int k){
+ int j;
  
+ int array[100];
+ for(j=0;j<k;j++){
+     if(array[j]>k){
+         k=array[j];
+     }
+ }
     int l;
     for(l=4;l<k;l++){
   printf(" ");  

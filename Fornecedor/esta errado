@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 void linha() {
@@ -261,7 +262,7 @@ void subproduto(produto y){ // os dados dos produtos
 }
 
 
-void subtabela(inserir x, inserir fornecedor[],int arrayforne ){ //os dados dos fornecedores
+void subtabela(inserir x,int arrayforne,inserir fornecedor[] ){ //os dados dos fornecedores
  int l;
  int j;
  int o;
@@ -277,6 +278,7 @@ void subtabela(inserir x, inserir fornecedor[],int arrayforne ){ //os dados dos 
            printf(" ");
            
     }
+ }
 printf("|");
 
  cnpjvoid(x.cnpj);
@@ -334,7 +336,7 @@ do{
 		tabela1(fornecedor[i]);
 		printf("\n");
 		for(i=0;i<arrayforne;i++){
-		subtabela(fornecedor[i],arrayforne);
+		 subtabela(fornecedor[i], arrayforne, fornecedor);
 		}
 		printf("\n");
 		break;
@@ -346,7 +348,7 @@ break;
 
 case 4:
 linha();
-	subtabela(fornecedor[i], arrayforne);
+ subtabela(fornecedor[i], arrayforne, fornecedor);
 
 tabela2();
 printf("\n");

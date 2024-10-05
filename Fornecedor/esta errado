@@ -22,6 +22,18 @@ typedef struct{   // variaveis dos fornecedores
 	char nome[100],contato[100],email[100],tipo[100],cnpj[100],cep[100];
 }inserir;
 
+void espacamento(int karray[],int p){
+   
+  for (int i = 0; i < p; i++) {
+        int k = karray[i];
+
+      
+        for (int l = 4; l < k; l++) {
+            printf(" ");  
+        }
+}
+}
+
 inserir cadastro(inserir fornecedor[],int arrayforne) {         //cadastrar fornecedor
 inserir x;
 int existir=0;
@@ -214,13 +226,12 @@ return y;
 
 void tabela1(inserir x) {       //Tabela principal
 int l;
+ int karray[]={strlen(x.nome)};
+  int p = sizeof(karray)/sizeof(karray[0]);
 int k=strlen(x.nome);
 	printf("|ID ");
 printf("|NOME");
-for(l=4;l<k;l++){
-  printf(" ");  
- 
-}
+espacamento(karray,p);
 	printf("|CNPJ              ");
 	printf("|CONTATO       ");
 	printf("|EMAIL");
@@ -266,7 +277,7 @@ void subtabela(inserir x,int arrayforne,inserir fornecedor[] ){ //os dados dos f
  int l;
  int j;
  int o;
- int u;
+ int u=strlen(x.nome);
  int comparartamn;
  printf("|%3.f|",x.id);
  printf("%s",x.nome);
@@ -310,6 +321,7 @@ int main()
     int arrayprod=0,arrayforne=0;
     int i,j;
 x.id = 0;
+int k = strlen(x.nome);
     strcpy(x.nome, "");
     strcpy(x.contato, "");
     strcpy(x.email, "");

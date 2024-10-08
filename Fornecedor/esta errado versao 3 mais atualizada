@@ -42,11 +42,28 @@ void espacamento(int k,int arrayforne,inserir fornecedor[],int* maiorValor){
     }
 
     // Imprimir os espaços em branco para alinhar as colunas
-    for (int l = 4; l < (*maiorValor - k + 0); l++) {
+    for (int l = 0; l < (*maiorValor - k + 0); l++) {
         printf(" ");
     }
 }
 
+void espacamento2(int k,int arrayforne,inserir fornecedor[],int* maiorValor){
+ int j;
+    *maiorValor = 0;
+
+    // Calcular o maior comprimento dos nomes
+    for (j = 0; j < arrayforne; j++) {
+        int comprimentoNome = strlen(fornecedor[j].nome);
+        if (comprimentoNome > *maiorValor) {
+            *maiorValor = comprimentoNome;
+        }
+    }
+
+    // Imprimir os espaços em branco para alinhar as colunas
+    for (int l = 4; l < (*maiorValor - k + 0); l++) {
+        printf(" ");
+    }
+}
 
 inserir cadastro(inserir fornecedor[],int arrayforne) {         //cadastrar fornecedor
 inserir x;
@@ -250,7 +267,7 @@ int maiorValor;
 int k=strlen(x.nome);
 	printf("|ID ");
 printf("|NOME");
-espacamento(k,arrayforne,fornecedor,&maiorValor);
+espacamento2(k,arrayforne,fornecedor,&maiorValor);
 	printf("|CNPJ              ");
 	printf("|CONTATO       ");
 	printf("|EMAIL");

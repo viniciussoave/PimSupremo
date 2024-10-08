@@ -1,3 +1,4 @@
+
 /******************************************************************************
 
                             Online C Compiler.
@@ -33,7 +34,7 @@ void espacamento(int k,int arrayforne,inserir fornecedor[],int* maiorValor){
  int j;
     *maiorValor = 0;
 
-    // Calcular o maior comprimento dos nomes
+    
     for (j = 0; j < arrayforne; j++) {
         int comprimentoNome = strlen(fornecedor[j].nome);
         if (comprimentoNome > *maiorValor) {
@@ -41,7 +42,7 @@ void espacamento(int k,int arrayforne,inserir fornecedor[],int* maiorValor){
         }
     }
 
-    // Imprimir os espaços em branco para alinhar as colunas
+   
     for (int l = 0; l < (*maiorValor - k + 0); l++) {
         printf(" ");
     }
@@ -51,7 +52,7 @@ void espacamento2(int k,int arrayforne,inserir fornecedor[],int* maiorValor){
  int j;
     *maiorValor = 0;
 
-    // Calcular o maior comprimento dos nomes
+ 
     for (j = 0; j < arrayforne; j++) {
         int comprimentoNome = strlen(fornecedor[j].nome);
         if (comprimentoNome > *maiorValor) {
@@ -59,7 +60,7 @@ void espacamento2(int k,int arrayforne,inserir fornecedor[],int* maiorValor){
         }
     }
 
-    // Imprimir os espaços em branco para alinhar as colunas
+   
     for (int l = 4; l < (*maiorValor - k + 0); l++) {
         printf(" ");
     }

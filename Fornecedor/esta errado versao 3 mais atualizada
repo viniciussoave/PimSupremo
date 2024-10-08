@@ -20,8 +20,6 @@ float frete;
 float desconto;
 float valortotal;
 char nproduto[100];
- 
- 
 
 }produto;
 
@@ -178,23 +176,6 @@ if(existir5){
     printf("Fale o cep\n");
     fgets(x.cep, sizeof(x.cep), stdin);
     x.cep[strcspn(x.cep, "\n")] = 0; 
- 
-    for(j=0;j<arrayforne;j++){
-    compcep = strcmp(x.cep,fornecedor[j].cep);
-       if(compcep == 0){
-           printf("a\n");
-            existir6=1;
-            break;
-       }
-    }
-if(existir6){
-        printf("Cep ja cadastrado\n");
-        printf("escreva outro cep\n");
-    fgets(x.cep, sizeof(x.cep), stdin);
-    x.cep[strcspn(x.cep, "\n")] = 0; 
-    }
-
-
     printf("Fale o tipo\n");
     fgets(x.tipo, sizeof(x.tipo), stdin);
     x.tipo[strcspn(x.tipo, "\n")] = 0; 
@@ -310,7 +291,6 @@ void subproduto(produto y){ // os dados dos produtos
     printf("|%.f|%s|%.2f|%.2f|%.2f|%.2f|%.2f|",y.id,y.nproduto,y.qtd,y.unidade,
     y.frete,y.desconto,y.valortotal);
 }
-
 
 void subtabela(inserir x,int arrayforne,inserir fornecedor[] ){ //os dados dos fornecedores
 

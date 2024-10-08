@@ -27,13 +27,15 @@ char nproduto[100];
 
 typedef struct{   // variaveis dos fornecedores
     float id;
-	char nome[100],contato[100],email[100],tipo[100],cnpj[100],cep[100];
+	char nome[100],contato[100],email[100],tipo[100],cnpj[100],cep[100]; 
 }inserir;
-
+//espacamento para a subtabelanome
 void espacamento(int k,int arrayforne,inserir fornecedor[],int* maiorValor){
  int j;
     *maiorValor = 0;
-
+if (arrayforne == 0) {
+        return;
+    }
     
     for (j = 0; j < arrayforne; j++) {
         int comprimentoNome = strlen(fornecedor[j].nome);
@@ -47,8 +49,8 @@ void espacamento(int k,int arrayforne,inserir fornecedor[],int* maiorValor){
         printf(" ");
     }
 }
-
-void espacamento2(int k,int arrayforne,inserir fornecedor[],int* maiorValor){
+//espacamento para tabela nome
+void espacamento2(int k,int arrayforne,inserir fornecedor[],int* maiorValor){ 
  int j;
     *maiorValor = 0;
 
@@ -311,6 +313,7 @@ void subproduto(produto y){ // os dados dos produtos
 
 
 void subtabela(inserir x,int arrayforne,inserir fornecedor[] ){ //os dados dos fornecedores
+
  int l;
  int maiorValor;
  int k=strlen(x.nome);
@@ -376,7 +379,7 @@ do{
 		
 		printf("\n");
 		for(i=0;i<arrayforne;i++){
-			subtabela(fornecedor[i],arrayforne,fornecedor);
+			subtabela(fornecedor[arrayforne - 1],arrayforne,fornecedor);
 		}
 		printf("\n");
 		break;

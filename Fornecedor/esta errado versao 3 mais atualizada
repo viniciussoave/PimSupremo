@@ -379,7 +379,7 @@ do{
 		
 		printf("\n");
 		for(i=0;i<arrayforne;i++){
-			subtabela(fornecedor[arrayforne - 1],arrayforne,fornecedor);
+			subtabela(fornecedor[i],arrayforne,fornecedor);
 		}
 		printf("\n");
 		break;

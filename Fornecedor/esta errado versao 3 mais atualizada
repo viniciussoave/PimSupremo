@@ -1,3 +1,10 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
 #include <stdio.h>
 #include <string.h>
 void linha() {
@@ -22,28 +29,33 @@ typedef struct{   // variaveis dos fornecedores
 	char nome[100],contato[100],email[100],tipo[100],cnpj[100],cep[100];
 }inserir;
 
-void espacamento(int k,int arrayforne,inserir fornecedor[]){
+void espacamento(int k,int arrayforne,inserir fornecedor[],int* maiorValor){
  int j;
- int o[100];
- 
- for(j=0;j<arrayforne;j++){
-   o[j]=strlen(fornecedor[j].nome);
-    if(o[j] <= k){
-     k=o[j];
- }
- }
- 
-    int l;
-    for(l=4;l<k;l++){
-  printf(" ");  
- 
-}
+    *maiorValor = 0;
+
+    // Calcular o maior comprimento dos nomes
+    for (j = 0; j < arrayforne; j++) {
+        int comprimentoNome = strlen(fornecedor[j].nome);
+        if (comprimentoNome > *maiorValor) {
+            *maiorValor = comprimentoNome;
+        }
+    }
+
+    // Imprimir os espaços em branco para alinhar as colunas
+    for (int l = 4; l < (*maiorValor - k + 0); l++) {
+        printf(" ");
+    }
 }
 
 
 inserir cadastro(inserir fornecedor[],int arrayforne) {         //cadastrar fornecedor
 inserir x;
 int existir=0;
+int existir2=0;
+int existir3=0;
+int existir4=0;
+int existir5=0;
+int existir6=0;
 int j;
 int compnome;
 int compcnpj;
@@ -74,11 +86,11 @@ for(j=0;j<arrayforne;j++){
     compnome = strcmp(x.nome,fornecedor[j].nome);
        if(compnome == 0){
            printf("a\n");
-            existir=1;
+            existir2=1;
             break;
        }
     }
-if(existir){
+if(existir2){
         printf("Nome ja cadastrado\n");
         printf("escreva outro nome\n");
     fgets(x.nome, sizeof(x.nome), stdin);
@@ -93,11 +105,11 @@ if(existir){
     compcnpj = strcmp(x.cnpj,fornecedor[j].cnpj);
        if(compcnpj == 0){
            printf("a\n");
-            existir=1;
+            existir3=1;
             break;
        }
     }
-if(existir){
+if(existir3){
         printf("Cnpj ja cadastrado\n");
         printf("escreva outro cnpj\n");
     fgets(x.cnpj, sizeof(x.cnpj), stdin);
@@ -112,11 +124,11 @@ if(existir){
     compcontato = strcmp(x.contato,fornecedor[j].contato);
        if(compcontato == 0){
            printf("a\n");
-            existir=1;
+            existir4=1;
             break;
        }
     }
-if(existir){
+if(existir4){
         printf("Contato ja cadastrado\n");
         printf("escreva outro contato\n");
     fgets(x.contato, sizeof(x.contato), stdin);
@@ -131,11 +143,11 @@ if(existir){
     compemail = strcmp(x.email,fornecedor[j].email);
        if(compemail == 0){
            printf("a\n");
-            existir=1;
+            existir5=1;
             break;
        }
     }
-if(existir){
+if(existir5){
         printf("email ja cadastrado\n");
         printf("escreva outro email\n");
     fgets(x.email, sizeof(x.email), stdin);
@@ -151,11 +163,11 @@ if(existir){
     compcep = strcmp(x.cep,fornecedor[j].cep);
        if(compcep == 0){
            printf("a\n");
-            existir=1;
+            existir6=1;
             break;
        }
     }
-if(existir){
+if(existir6){
         printf("Cep ja cadastrado\n");
         printf("escreva outro cep\n");
     fgets(x.cep, sizeof(x.cep), stdin);
@@ -233,10 +245,12 @@ return y;
 
 void tabela1(inserir x,int arrayforne, inserir fornecedor[]) {       //Tabela principal
 int l;
+int maiorValor;
+
 int k=strlen(x.nome);
 	printf("|ID ");
 printf("|NOME");
-espacamento(k,arrayforne,fornecedor);
+espacamento(k,arrayforne,fornecedor,&maiorValor);
 	printf("|CNPJ              ");
 	printf("|CONTATO       ");
 	printf("|EMAIL");
@@ -278,15 +292,14 @@ void subproduto(produto y){ // os dados dos produtos
 }
 
 
-void subtabela(inserir x ){ //os dados dos fornecedores
+void subtabela(inserir x,int arrayforne,inserir fornecedor[] ){ //os dados dos fornecedores
  int l;
+ int maiorValor;
+ int k=strlen(x.nome);
  printf("|%3.f|",x.id);
  printf("%s",x.nome);
  
- for(l=4;l>strlen(x.nome);l--){
-    
-     printf(" ");
-}
+ espacamento(k,arrayforne,fornecedor,&maiorValor);
 printf("|");
 
  cnpjvoid(x.cnpj);
@@ -345,7 +358,7 @@ do{
 		
 		printf("\n");
 		for(i=0;i<arrayforne;i++){
-		subtabela(fornecedor[i]);
+			subtabela(fornecedor[i],arrayforne,fornecedor);
 		}
 		printf("\n");
 		break;
@@ -357,7 +370,7 @@ break;
 
 case 4:
 linha();
-	subtabela(fornecedor[i]);
+	subtabela(fornecedor[i],arrayforne,fornecedor);
 	
 tabela2();
 printf("\n");

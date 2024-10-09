@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <locale.h>
+#include <stdlib.h>
 
 int main() {
     int subOpcao, subSubOpcao;
@@ -53,26 +55,36 @@ int main() {
                 
                 switch (subSubOpcao) {
                     case 1:
+                        system("cls");
                         printf("Id = ");
                         scanf("%d", &temp.id);
+                        system("cls");
                         break;
                     case 2:
+                        system("cls");
                         printf("Nome = ");
                         getchar();
                         fgets(temp.nomeProduto, sizeof(temp.nomeProduto), stdin);
                         temp.nomeProduto[strcspn(temp.nomeProduto, "\n")] = '\0';
+                        system("cls");
                         break;
                     case 3:
+                        system("cls");
                         printf("Quantidade = ");
                         scanf("%d", &temp.qtd);
+                        system("cls");
                         break;
                     case 4:
+                        system("cls");
                         printf("Preço por unidade = ");
                         scanf("%f", &temp.precoUnidade);
+                        system("cls");
                         break;
                     case 5:
+                        system("cls");
                         printf("Desconto = ");
                         scanf("%f", &temp.desconto);
+                        system("cls");
                         break;
                     case 6:
                         temp.valorFinal = (temp.precoUnidade * temp.qtd) * (1 - (temp.desconto / 100));
@@ -85,7 +97,15 @@ int main() {
                         Prod[indice].valorFinal = temp.valorFinal;
                         indice++;
                         printf("Produto criado com sucesso.\n");
+                        temp.id = 0;
+                        temp.qtd = 0;
+                        temp.precoUnidade = 0;
+                        temp.desconto = 0;
+                        temp.valorFinal = 0;
+                        temp.nomeProduto[0] = '\0';
                         system("pause");
+                        system("cls");
+                        break;
                     case 7:
                             temp.id = 0;
                             temp.qtd = 0;
@@ -93,6 +113,7 @@ int main() {
                             temp.desconto = 0;
                             temp.valorFinal = 0;
                             temp.nomeProduto[0] = '\0';
+                            system("cls");
                             break;
                         
                 }
@@ -108,6 +129,7 @@ int main() {
 
             default:
                 printf("Escolha uma opção válida.\n");
+                break;
         }
     } while (subOpcao != 3);
 

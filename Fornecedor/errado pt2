@@ -84,6 +84,29 @@ if (arrayforne == 0) {
     }
 }
 
+//espacamento tipo subtabela
+void espacatipo2(int k,int arrayforne,inserir fornecedor[],int* maiortipo){
+ int j;
+    *maiortipo = 0;
+if (arrayforne == 0) {
+        return;
+    }
+    
+    for (j = 0; j < arrayforne; j++) {
+        int comprimentoNome = strlen(fornecedor[j].tipo);
+        if (comprimentoNome > *maiortipo) {
+            *maiortipo = comprimentoNome;
+        }
+    }
+
+   
+    for (int l = 0; l < (*maiortipo- k + 0); l++) {
+        printf(" ");
+    }
+}
+
+
+
 inserir cadastro(inserir fornecedor[],int arrayforne) {         //cadastrar fornecedor
 inserir x;
 int existir=0;
@@ -314,7 +337,7 @@ printf("|");
  cepcerto(x.cep);
      printf("|%s\n", 
          x.tipo);
-espatipo2(0, arrayforne, fornecedor, &maiorValor);
+espacatipo2(0, arrayforne, fornecedor, &maiorValor);
     printf("|");
 }
 
@@ -364,22 +387,6 @@ void espatipo(int k,int arrayforne,inserir fornecedor[],int* maiortipo){
     }
 }
 
-//espacamento tipo subtabela
-void espatipo2(int k,int arrayforne,inserir fornecedor[],int* maiortipo){ 
- int j;
-    *maiortipo = 0;
-    for (j = 0; j < arrayforne; j++) {
-        int comprimentoNome = strlen(fornecedor[j].tipo);
-        if (comprimentoNome > *maiortipo) {
-            *maiortipo = comprimentoNome;
-        }
-    }
-
-   
-    for (int l = 0; l < (*maiortipo - k + 0); l++) {
-        printf(" ");
-    }
-}
 
 
 void tabela1(int arrayforne, inserir fornecedor[]) {       //Tabela principal

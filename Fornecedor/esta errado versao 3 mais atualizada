@@ -71,13 +71,12 @@ if (arrayforne == 0) {
         return;
     }
     
-    for (j = 0; j < arrayforne; j++) {
-        int comprimentoNome = strlen(fornecedor[j].nome);
-        if (comprimentoNome > *maioremail) {
-            *maioremail = comprimentoNome;
+     for (j = 0; j < arrayforne; j++) {
+        int comprimentoEmail = strlen(fornecedor[j].email);
+        if (comprimentoEmail > *maioremail) {
+            *maioremail = comprimentoEmail;
         }
     }
-
    
     for (int l = 0; l < (*maioremail - k + 0); l++) {
         printf(" ");

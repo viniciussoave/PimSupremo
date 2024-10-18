@@ -64,23 +64,26 @@ if (arrayforne == 0) {
 }
 
 //espacamento para gmail subtabela
-void espacagmail1(int k,int arrayforne,inserir fornecedor[],int* maioremail){
- int j;
-    *maioremail = 0;
-if (arrayforne == 0) {
+void espacagmail1(int k,int arrayforne,inserir fornecedor[],int* maiorvalor3){
+  int j;
+    *maiorvalor3 = 0;
+    if (arrayforne == 0) {
         return;
     }
     
     for (j = 0; j < arrayforne; j++) {
-        int comprimentoNome = strlen(fornecedor[j].email);
-        if (comprimentoNome > *maioremail) {
-            *maioremail = comprimentoNome;
+        int comprimentoNome = strlen(fornecedor[j].nome);
+        if (comprimentoNome > *maiorvalor3) {
+            *maiorvalor3 = comprimentoNome;
         }
     }
 
-   
-    for (int l = 0; l < (*maioremail - k + 0); l++) {
-        printf(" ");
+    // Calculando o número de espaços a serem impressos
+    int espacos = *maiorvalor3 - k + 1; // Ajuste aqui
+    if (espacos > 0) {
+        for (int l = 0; l < espacos; l++) {
+            printf(" ");
+        }
     }
 }
 
@@ -284,6 +287,8 @@ void telefone(char *tele){//formatacao do contato
    tele[7],tele[8],tele[9],tele[10]);
    printf("%s",tele1);
 }
+
+
 void cepcerto( char *cep){ //formatacao cep
     char cep1[13];
     snprintf(cep1,sizeof(cep1),"%c%c%c%c%c-%c%c%c",
@@ -296,25 +301,23 @@ void subproduto(produto y){ // os dados dos produtos
     y.frete,y.desconto,y.valortotal);
 }
 
-void subtabela(inserir x,int arrayforne,inserir fornecedor[] ){ //os dados dos fornecedores
-
- int l;
- int maiorValor;
- int k=strlen(x.nome);
- printf("|%3.f|",x.id);
- printf("%s",x.nome);
- 
- espacamento(k,arrayforne,fornecedor,&maiorValor);
-printf("|");
-
- cnpjvoid(x.cnpj);
- telefone(x.contato);
- printf("|%s",x.email);
- espacagmail1(k,arrayforne,fornecedor,&maiorValor);
- cepcerto(x.cep);
-     printf("|%s|\n", 
-         x.tipo);
+void subtabela(inserir x, int arrayforne, inserir fornecedor[]) {
+    int l;
+    int maiorValor;
+    int k = strlen(x.nome);
     
+    printf("|%3.f|", x.id);
+    printf("%s", x.nome);
+    
+    espacamento(k, arrayforne, fornecedor, &maiorValor);
+    printf("|");
+
+    cnpjvoid(x.cnpj);
+    telefone(x.contato);
+    printf("|%s", x.email);
+    espacagmail1(strlen(x.email), arrayforne, fornecedor, &maiorValor); // Verifique a passagem do comprimento correto
+    cepcerto(x.cep);
+    printf("|%s|\n", x.tipo);
 }
 
 void tabela2(){ //tabela dos produtos
@@ -327,6 +330,8 @@ void tabela2(){ //tabela dos produtos
     printf("|TOTAL|");
     
 }
+
+
 //espacamento para tabela nome
 void espacamento2(int k,int arrayforne,inserir fornecedor[],int* maiorValor){ 
  int j;
@@ -345,6 +350,7 @@ void espacamento2(int k,int arrayforne,inserir fornecedor[],int* maiorValor){
         printf(" ");
     }
 }
+
 void tabela1(int arrayforne, inserir fornecedor[]) {       //Tabela principal
 int l;
 int maiorValor;
@@ -366,6 +372,8 @@ printf("|NOME");
 	printf("|TIPO|");
 
 }
+
+
 int main()
 
 { produto prod[100];

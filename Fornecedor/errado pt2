@@ -51,9 +51,9 @@ if (arrayforne == 0) {
     }
     
     for (j = 0; j < arrayforne; j++) {
-        int comprimentoNome = strlen(fornecedor[j].email);
-        if (comprimentoNome > *maioremail) {
-            *maioremail = comprimentoNome;
+        int comprimentogmail = strlen(fornecedor[j].email);
+        if (comprimentogmail > *maioremail) {
+            *maioremail = comprimentogmail;
         }
     }
 
@@ -72,9 +72,9 @@ if (arrayforne == 0) {
     }
     
     for (j = 0; j < arrayforne; j++) {
-        int comprimentoNome = strlen(fornecedor[j].email);
-        if (comprimentoNome > *maioremail) {
-            *maioremail = comprimentoNome;
+        int comprimentogmail = strlen(fornecedor[j].email);
+        if (comprimentogmail > *maioremail) {
+            *maioremail = comprimentogmail;
         }
     }
 
@@ -83,6 +83,24 @@ if (arrayforne == 0) {
         printf(" ");
     }
 }
+
+//espacamento para tipo tabela1
+void espatipo(int k,int arrayforne,inserir fornecedor[],int* maiortipo){ 
+ int j;
+    *maiortipo = 0;
+    for (j = 0; j < arrayforne; j++) {
+        int comprimentoNome = strlen(fornecedor[j].tipo);
+        if (comprimentoNome > *maiortipo) {
+            *maiortipo = comprimentoNome;
+        }
+    }
+
+   
+    for (int l = 4; l < (*maiortipo - k + 0); l++) {
+        printf(" ");
+    }
+}
+
 
 //espacamento tipo subtabela
 void espacatipo2(int k,int arrayforne,inserir fornecedor[],int* maiortipo){
@@ -370,22 +388,6 @@ void espacamento2(int k,int arrayforne,inserir fornecedor[],int* maiorValor){
     }
 }
 
-//espacamento para tipo tabela1
-void espatipo(int k,int arrayforne,inserir fornecedor[],int* maiortipo){ 
- int j;
-    *maiortipo = 0;
-    for (j = 0; j < arrayforne; j++) {
-        int comprimentoNome = strlen(fornecedor[j].tipo);
-        if (comprimentoNome > *maiortipo) {
-            *maiortipo = comprimentoNome;
-        }
-    }
-
-   
-    for (int l = 4; l < (*maiortipo - k + 0); l++) {
-        printf(" ");
-    }
-}
 
 
 

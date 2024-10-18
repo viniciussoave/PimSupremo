@@ -64,26 +64,23 @@ if (arrayforne == 0) {
 }
 
 //espacamento para gmail subtabela
-void espacagmail1(int k,int arrayforne,inserir fornecedor[],int* maiorvalor3){
-  int j;
-    *maiorvalor3 = 0;
-    if (arrayforne == 0) {
+void espacagmail1(int k,int arrayforne,inserir fornecedor[],int* maioremail){
+ int j;
+    *maioremail = 0;
+if (arrayforne == 0) {
         return;
     }
     
     for (j = 0; j < arrayforne; j++) {
         int comprimentoNome = strlen(fornecedor[j].nome);
-        if (comprimentoNome > *maiorvalor3) {
-            *maiorvalor3 = comprimentoNome;
+        if (comprimentoNome > *maioremail) {
+            *maioremail = comprimentoNome;
         }
     }
 
-    // Calculando o número de espaços a serem impressos
-    int espacos = *maiorvalor3 - k + 1; // Ajuste aqui
-    if (espacos > 0) {
-        for (int l = 0; l < espacos; l++) {
-            printf(" ");
-        }
+   
+    for (int l = 0; l < (*maioremail - k + 0); l++) {
+        printf(" ");
     }
 }
 

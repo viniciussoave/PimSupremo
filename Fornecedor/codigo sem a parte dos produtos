@@ -326,6 +326,40 @@ printf("|NOME");
 printf("|");
 }
 
+// pesquisar 3 opção
+void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
+    int number;
+    int j;
+    int verificar;
+    printf("escolha como voce quer achar o fornecedor\n");
+    printf("1-Pelo id\n");
+    printf("2-Pelo cnpj\n");
+    scanf("%d",&number);
+    if(number ==1){
+        printf("Escreva o id\n");
+     scanf("%f",&x.id);
+        
+    do{ 
+         verificar = 0; 
+        for (j = 0; j < arrayforne; j++) {
+                if (fornecedor[j].id == x.id) { 
+                    verificar = 1; 
+                    break; 
+                }
+            }
+    if(!verificar){
+        printf("ID nao encontrado\n");
+        printf("Fale o numero do id\n");
+    scanf("%f", &x.id);
+    }
+    }while(!verificar);
+    
+          printf("ID encontrado: %f\n", x.id); 
+    }
+    if(number==2){
+        printf("escreva o cnpj\n");
+    }
+}
 
 int main()
 
@@ -347,6 +381,7 @@ do{
     linha();
 	printf("1-Cadastrar fornecedor\n");
 	printf("2-Mostrar tabela dos fornecedores\n");
+	printf("3-Pesquisar Fornecedor\n");
 	printf("5-Sair \n");
 	printf("escolha a opcao\n");
 	scanf("%d",&numero);
@@ -364,6 +399,9 @@ do{
 			subtabela(fornecedor[i],arrayforne,fornecedor);
 		}
 		printf("\n");
+		break;
+		case 3:
+		pesquisar1(arrayforne,fornecedor, x);
 		break;
 }
 }while(numero !=5);	

@@ -4,16 +4,7 @@ void linha() {
 	printf("___________\n");
 
 }
-typedef struct{ //variaveis dos produtos
-float id;
-float qtd;
-float unidade;
-float frete;
-float desconto;
-float valortotal;
-char nproduto[100];
 
-}produto;
 
 typedef struct{   // variaveis dos fornecedores
     float id;
@@ -37,6 +28,47 @@ if (arrayforne == 0) {
 
    
     for (int l = 0; l < (*maiorValor - k + 0); l++) {
+        printf(" ");
+    }
+}
+
+//espacamento para a tabela
+void espacatipo(int k,int arrayforne,inserir fornecedor[],int* maiortipo){
+ int j;
+    *maiortipo = 0;
+if (arrayforne == 0) {
+        return;
+    }
+    
+    for (j = 0; j < arrayforne; j++) {
+        int comprimentoTipo = strlen(fornecedor[j].tipo);
+        if (comprimentoTipo > *maiortipo) {
+            *maiortipo = comprimentoTipo;
+        }
+    }
+
+   
+    for (int l = 4; l < (*maiortipo - k + 0); l++) {
+        printf(" ");
+    }
+}
+
+//espcamento subtabela
+void espacatipo1(int k,int arrayforne,inserir fornecedor[],int* maiortipo){
+ int j;
+    *maiortipo = 0;
+if (arrayforne == 0) {
+        return;
+    }
+    
+     for (j = 0; j < arrayforne; j++) {
+        int comprimentoTipo = strlen(fornecedor[j].tipo);
+        if (comprimentoTipo > *maiortipo) {
+            *maiortipo = comprimentoTipo;
+        }
+    }
+   
+    for (int l = 0; l < (*maiortipo - k + 0); l++) {
         printf(" ");
     }
 }
@@ -198,69 +230,6 @@ if(existir5){
     x.tipo[strcspn(x.tipo, "\n")] = 0; 
      return x;
 }
-produto cadproduto(produto prod[], int arrayprod,int arrayforne,inserir fornecedor[]){ //cadastrar os produtos
- 
-    produto y;
-    float prodfornecedor;
-    int existi=0;
-    int j;
-    
-    printf("Em qual fornecedor voce ira cadastrar o produto?\n");
- scanf("%f",&prodfornecedor); 
-
-  for(j=0;j<prodfornecedor;j++){
-if(fornecedor[j].id !=prodfornecedor){
-    printf("Nenhum id localizado \n");
-
-  
-    
-}
-}
-
-
-   getchar();
-    printf("Escreva o id do produto\n");
-    scanf("%f",&y.id);
-     for(j=0;j<arrayprod;j++){
-        if(prod[j].id == y.id){
-            
-            existi=1;
-            break;
-        }
-    }
-    
-    if(existi){
-        printf("ID ja existente cadastre outro\n");
-        printf("Escreva o id do produto\n");
-    scanf("%f",&y.id);
-        
-        
-    }
- 
-    getchar();
-    
-    printf("Escreva o nome do produto\n");
-    fgets(y.nproduto,sizeof(y.nproduto),stdin);
-    y.nproduto[strcspn(y.nproduto, "\n")] = 0; 
-    printf("Escreva a quantidade de produto\n");
-    scanf("%f",&y.qtd);
-    getchar();
-    
-    printf("escreva o valor do produto\n");
-    scanf("%f",&y.unidade);
-    getchar();
-    
-    printf("Escreva o valor do frete");
-scanf("%f",&y.frete);
-    getchar();
-    
-     printf("Escreva o valor do desconto");
-scanf("%f",&y.desconto);
-    getchar();
-    y.valortotal=((((y.qtd)*(y.unidade))+y.frete)-y.desconto);
-return y;
-}
-
 
 
 void cnpjvoid( char *cnpj){ //formatacao do cnpj
@@ -292,10 +261,7 @@ void cepcerto( char *cep){ //formatacao cep
     cep[5],cep[6],cep[7]);
     printf("|%s",cep1);
 }
-void subproduto(produto y){ // os dados dos produtos
-    printf("|%.f|%s|%.2f|%.2f|%.2f|%.2f|%.2f|",y.id,y.nproduto,y.qtd,y.unidade,
-    y.frete,y.desconto,y.valortotal);
-}
+
 
 void subtabela(inserir x, int arrayforne, inserir fornecedor[]) {
     int l;
@@ -313,20 +279,10 @@ void subtabela(inserir x, int arrayforne, inserir fornecedor[]) {
     printf("|%s", x.email);
     espacagmail1(strlen(x.email), arrayforne, fornecedor, &maiorValor); // Verifique a passagem do comprimento correto
     cepcerto(x.cep);
-    printf("|%s|\n", x.tipo);
+    printf("|%s", x.tipo);
+    espacatipo1(strlen(x.tipo), arrayforne, fornecedor, &maiorValor);
+    printf("|\n");
 }
-
-void tabela2(){ //tabela dos produtos
-    printf("|ID|");
-    printf("|PRODUTO|");
-    printf("|QUANTIDADE|");
-    printf("|PRECO UNITARIO|");
-    printf("|FRETE|");
-    printf("|DESCONTO|");
-    printf("|TOTAL|");
-    
-}
-
 
 //espacamento para tabela nome
 void espacamento2(int k,int arrayforne,inserir fornecedor[],int* maiorValor){ 
@@ -365,14 +321,29 @@ printf("|NOME");
 	printf("|EMAIL");
 	espacagmail(0, arrayforne, fornecedor, &maiorValor);
 	printf("|CEP      ");
-	printf("|TIPO|");
-
+	printf("|TIPO");
+	espacatipo(0, arrayforne, fornecedor, &maiorValor);
+printf("|");
 }
 
+// pesquisar 3 opção
+void pesquisar1(){
+    int number;
+    printf("escolha como voce quer achar o fornecedor\n");
+    printf("1-Pelo id\n");
+    printf("2-Pelo cnpj\n");
+    scanf("%d",&number);
+    if(number ==1){
+        printf("Escreva o id\n");
+    }
+    if(number==2){
+        printf("escreva o cnpj\n");
+    }
+}
 
 int main()
 
-{ produto prod[100];
+{ 
 
      inserir fornecedor[100]; 
     inserir x;
@@ -390,8 +361,7 @@ do{
     linha();
 	printf("1-Cadastrar fornecedor\n");
 	printf("2-Mostrar tabela dos fornecedores\n");
-	printf("3-Cadastrar produto\n");
-	printf("4-Mostrar tabela dos produtos\n");
+	printf("3-Pesquisar Fornecedor\n");
 	printf("5-Sair \n");
 	printf("escolha a opcao\n");
 	scanf("%d",&numero);
@@ -410,24 +380,9 @@ do{
 		}
 		printf("\n");
 		break;
-case 3:
-
-prod[arrayprod++]=cadproduto(prod, arrayprod,arrayforne, fornecedor);
-printf("\n");
-break;
-
-case 4:
-linha();
-	subtabela(fornecedor[i],arrayforne,fornecedor);
-	
-tabela2();
-printf("\n");
-for(j=0;j<arrayprod;j++){
-subproduto(prod[j]);
-printf("\n");
-}
-printf("\n");
-break;
+		case 3:
+		pesquisar1();
+		break;
 }
 }while(numero !=5);	
 

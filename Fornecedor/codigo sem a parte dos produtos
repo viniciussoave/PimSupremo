@@ -355,6 +355,12 @@ void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
     }while(!verificar);
     
           printf("ID encontrado: %f\n", x.id); 
+          printf("Nome: %s\n", fornecedor[j].nome);
+        printf("CNPJ: %s\n", fornecedor[j].cnpj);
+        printf("Contato: %s\n", fornecedor[j].contato);
+        printf("Email: %s\n", fornecedor[j].email);
+        printf("CEP: %s\n", fornecedor[j].cep);
+        printf("Tipo: %s\n", fornecedor[j].tipo);
     }
     if(number==2){
         printf("escreva o cnpj\n");

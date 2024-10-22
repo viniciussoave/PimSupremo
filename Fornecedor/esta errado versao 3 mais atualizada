@@ -327,14 +327,16 @@ printf("|");
 }
 
 // pesquisar 3 opção
-void pesquisar1(){
+void pesquisar1(int arrayforne,inserir fornecedor[]){
     int number;
+    int j;
     printf("escolha como voce quer achar o fornecedor\n");
     printf("1-Pelo id\n");
     printf("2-Pelo cnpj\n");
     scanf("%d",&number);
     if(number ==1){
         printf("Escreva o id\n");
+        printf("%1.f\n",fornecedor->id);
     }
     if(number==2){
         printf("escreva o cnpj\n");
@@ -381,7 +383,7 @@ do{
 		printf("\n");
 		break;
 		case 3:
-		pesquisar1();
+		pesquisar1(arrayforne,fornecedor);
 		break;
 }
 }while(numero !=5);	

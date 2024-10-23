@@ -3,7 +3,6 @@
 #include <locale.h>
 #include <stdlib.h>
 
-// Definição da estrutura produto
 typedef struct { 
     int id;
     int qtd;
@@ -13,62 +12,73 @@ typedef struct {
     char nomeProduto[100];
 } produto;
 
-// Função para verificar se o ID já existe
 int verificarID(produto Prod[], int indice, int id) {
     for (int i = 0; i < indice; i++) {
         if (Prod[i].id == id) {
-            return 1; // ID já existe
+            return 1;
         }
     }
-    return 0; // ID não existe
+    return 0;
 }
 
-// Função para converter string para float, substituindo ',' por '.'
 float stringParaFloat(char *str) {
     for (int i = 0; str[i] != '\0'; i++) {
         if (str[i] == ',') {
-            str[i] = '.'; // Substitui ',' por '.'
+            str[i] = '.';
         }
     }
-    return atof(str); // Converte a string para float
+    return atof(str);
 }
 
-// Função para consultar produtos
-void consultarProdutos(produto Prod[], int indice) {
+void exibirTabela(produto Prod[], int indice) {
     if (indice == 0) {
         printf("Nenhum produto cadastrado.\n");
         return;
     }
-    
-    printf("=== Produtos Cadastrados ===\n");
+
+    int maxNome = 4;
+
     for (int i = 0; i < indice; i++) {
-        printf("ID: %d\n", Prod[i].id);
-        printf("Nome: %s\n", Prod[i].nomeProduto);
-        printf("Quantidade: %d\n", Prod[i].qtd);
-        printf("Preço por Unidade: %.2f\n", Prod[i].precoUnidade);
-        printf("Desconto: %.2f%%\n", Prod[i].desconto);
-        printf("Valor Final: %.2f\n", Prod[i].valorFinal);
-        printf("--------------------------\n");
+        if (strlen(Prod[i].nomeProduto) > maxNome) {
+            maxNome = strlen(Prod[i].nomeProduto);
+        }
     }
+
+    printf("=== Produtos Cadastrados ===\n");
+    printf("| ID | Nome%*s | Quantidade | Preço Unitário | Desconto | Valor Final |\n", maxNome - 4, "");
+    printf("---------------------------------------------------------------\n");
+    
+    for (int i = 0; i < indice; i++) {
+        printf("| %2d | %-*s | %10d | %13.2f | %8.2f%% | %11.2f |\n", 
+               Prod[i].id, 
+               maxNome, 
+               Prod[i].nomeProduto, 
+               Prod[i].qtd, 
+               Prod[i].precoUnidade, 
+               Prod[i].desconto, 
+               Prod[i].valorFinal);
+    }
+    
+    printf("---------------------------------------------------------------\n");
 }
 
 int main() {
-    int subOpcao, subSubOpcao = 0; // Inicializa subSubOpcao
+    int subOpcao, subSubOpcao = 0;
     int indice = 0;
 
-    produto temp = {0}; // Inicializa todos os campos da estrutura temp para 0
-    produto Prod[100] = {0}; // Inicializa todos os campos da estrutura Prod para 0
+    produto temp = {0};
+    produto Prod[100] = {0};
 
     do {
         printf("=== Menu de Produtos ===\n");
         printf("1. Cadastrar Produto\n");
-        printf("2. Consultar produtos\n");
+        printf("2. Exibir Produtos\n");
         printf("3. Editar Produtos\n");
         printf("4. Voltar ao Menu Principal\n");
         printf("======================\n");
         printf("Escolha uma opção: ");
         scanf("%d", &subOpcao);
-        getchar(); // Limpa o buffer de entrada
+        getchar();
         system("cls");
 
         switch (subOpcao) {
@@ -87,83 +97,81 @@ int main() {
                     printf("7. Cancelar\n");
                     printf("Escolha um dos valores para editar ou criar o produto: \n");
                     scanf("%d", &subSubOpcao);
-                    getchar(); // Limpa o buffer de entrada
+                    getchar();
                     
                     switch (subSubOpcao) {
                         case 1:
                             system("cls");
                             printf("Id (1-999) = ");
                             scanf("%d", &temp.id);
-                            getchar(); // Limpa o buffer de entrada
+                            getchar();
                             system("cls");
                             break;
                         case 2:
                             system("cls");
                             printf("Nome = ");
                             fgets(temp.nomeProduto, sizeof(temp.nomeProduto), stdin);
-                            temp.nomeProduto[strcspn(temp.nomeProduto, "\n")] = '\0'; // Remove nova linha
+                            temp.nomeProduto[strcspn(temp.nomeProduto, "\n")] = '\0';
                             system("cls");
                             break;
                         case 3:
                             system("cls");
                             printf("Quantidade = ");
                             scanf("%d", &temp.qtd);
-                            getchar(); // Limpa o buffer de entrada
+                            getchar();
                             system("cls");
                             break;
                         case 4:
                             system("cls");
-                            char precoStr[20]; // String para armazenar o preço temporariamente
+                            char precoStr[20];
                             printf("Preço por unidade = ");
-                            fgets(precoStr, sizeof(precoStr), stdin); // Lê como string
-                            temp.precoUnidade = stringParaFloat(precoStr); // Converte para float
+                            fgets(precoStr, sizeof(precoStr), stdin);
+                            temp.precoUnidade = stringParaFloat(precoStr);
                             system("cls");
                             break;
                         case 5:
                             system("cls");
-                            char descontoStr[20]; // String para armazenar o desconto temporariamente
+                            char descontoStr[20];
                             printf("Desconto = ");
-                            fgets(descontoStr, sizeof(descontoStr), stdin); // Lê como string
-                            temp.desconto = stringParaFloat(descontoStr); // Converte para float
+                            fgets(descontoStr, sizeof(descontoStr), stdin);
+                            temp.desconto = stringParaFloat(descontoStr);
                             system("cls");
                             break;
                         case 6:
                             system("cls");
 
-                            // Verifica se ID, nome e quantidade são válidos
                             if (temp.id < 1 || temp.id > 999) {
                                 printf("Erro: ID deve estar entre 1 e 999.\n");
-                                memset(&temp, 0, sizeof(temp)); // Zera a estrutura
+                                memset(&temp, 0, sizeof(temp));
                                 system("pause");
                                 system("cls");
-                                break; // Retorna ao menu de cadastro
+                                break;
                             }
 
                             if (verificarID(Prod, indice, temp.id)) {
                                 printf("Erro: Já existe um produto com esse ID.\n");
-                                memset(&temp, 0, sizeof(temp)); // Zera a estrutura
+                                memset(&temp, 0, sizeof(temp));
                                 system("pause");
                                 system("cls");
-                                break; // Retorna ao menu de cadastro
+                                break;
                             }
                             
                             if (strlen(temp.nomeProduto) == 0) {
                                 printf("Erro: Nome do produto não pode estar vazio.\n");
-                                memset(&temp, 0, sizeof(temp)); // Zera a estrutura
+                                memset(&temp, 0, sizeof(temp));
                                 system("pause");
                                 system("cls");
-                                break; // Retorna ao menu de cadastro
+                                break;
                             }
 
                             if (temp.qtd <= 0) {
                                 printf("Erro: Quantidade deve ser maior que zero.\n");
-                                memset(&temp, 0, sizeof(temp)); // Zera a estrutura
+                                memset(&temp, 0, sizeof(temp));
                                 system("pause");
                                 system("cls");
-                                break; // Retorna ao menu de cadastro
+                                break;
                             }
 
-                            // Calcula o valor final ao criar o produto
                             temp.valorFinal = (temp.precoUnidade * temp.qtd) * (1 - (temp.desconto / 100));
                             
                             Prod[indice].id = temp.id;
@@ -177,30 +185,28 @@ int main() {
                             
                             printf("Produto criado com sucesso.\n");
 
-                            // Reseta os valores temporários
-                            memset(&temp, 0, sizeof(temp)); // Limpa a estrutura
+                            memset(&temp, 0, sizeof(temp));
                             
                             system("pause");
                             system("cls");
 
                             break;
                         case 7:
-                             // Reseta os valores temporários
-                             memset(&temp, 0, sizeof(temp)); // Limpa a estrutura
+                             memset(&temp, 0, sizeof(temp));
                              system("cls");
                              break;                        
                         default:
                              printf("Escolha uma opção válida.\n");
-                             memset(&temp, 0, sizeof(temp)); // Zera a estrutura em caso de erro
+                             memset(&temp, 0, sizeof(temp));
                              break;
                     }
-                } while (subSubOpcao != 7 && subSubOpcao != 6); // Continua até cancelar
+                } while (subSubOpcao != 7 && subSubOpcao != 6);
 
                 break;
 
             case 2:
-                consultarProdutos(Prod, indice); // Chama a função de consulta de produtos
-                system("pause"); // Pausa para visualizar os resultados antes de limpar a tela
+                exibirTabela(Prod, indice);
+                system("pause"); 
                 system("cls"); 
                 break;
 
@@ -214,7 +220,7 @@ int main() {
 
             default:
                 printf("Escolha uma opção válida.\n");
-                memset(&temp, 0, sizeof(temp)); // Zera a estrutura em caso de erro
+                memset(&temp, 0, sizeof(temp)); 
                 break;
         }
     } while (subOpcao != 4);

@@ -168,11 +168,16 @@ if(existir2){
     fgets(x.nome, sizeof(x.nome), stdin);
     x.nome[strcspn(x.nome, "\n")] = 0; 
     }
+    
 
 
     printf("Fale o cnpj\n");
     fgets(x.cnpj, sizeof(x.cnpj), stdin);
     x.cnpj[strcspn(x.cnpj, "\n")] = 0; 
+    
+    if(strlen(x.cnpj)>14){
+        x.cnpj[14]='\0';
+    }
     for(j=0;j<arrayforne;j++){
     compcnpj = strcmp(x.cnpj,fornecedor[j].cnpj);
        if(compcnpj == 0){
@@ -376,15 +381,15 @@ void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
 void arquivoteste(FILE *arquivo,int arrayforne,inserir fornecedor[]){
     int i;
     for(i=0;i<arrayforne;i++){
-        fprintf(arquivo,"_______________________\n");
-        fprintf(arquivo,"ID : %0.f\n", fornecedor[i].id); 
-          fprintf(arquivo,"Nome: %s\n", fornecedor[i].nome);
+        fprintf(arquivo,"______________________________________________\n");
+        fprintf(arquivo," %0.f, ", fornecedor[i].id); 
+          fprintf(arquivo, "%s, ", fornecedor[i].nome);
      
-        fprintf(arquivo,"CNPJ: %s\n", fornecedor[i].cnpj);
-        fprintf(arquivo,"Contato: %s\n", fornecedor[i].contato);
-        fprintf(arquivo,"Email: %s\n", fornecedor[i].email);
-        fprintf(arquivo,"CEP: %s\n", fornecedor[i].cep);
-        fprintf(arquivo,"Tipo: %s\n", fornecedor[i].tipo);
+        fprintf(arquivo,"%s, ", fornecedor[i].cnpj);
+        fprintf(arquivo," %s, ", fornecedor[i].contato);
+        fprintf(arquivo," %s, ", fornecedor[i].email);
+        fprintf(arquivo," %s, ", fornecedor[i].cep);
+        fprintf(arquivo," %s, ", fornecedor[i].tipo);
         fprintf(arquivo,"\n");
         
     }

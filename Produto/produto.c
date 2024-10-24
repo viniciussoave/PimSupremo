@@ -149,7 +149,7 @@ int main() {
                             }
 
                             if (verificarID(Prod, indice, temp.id)) {
-                                printf("Erro: Já existe um produto com esse ID.\n");
+                                printf("Erro: Já existe um produto com esse ID.\n"); //tenho que corrigir o problema de verificar ID
                                 memset(&temp, 0, sizeof(temp));
                                 system("pause");
                                 system("cls");
@@ -181,7 +181,27 @@ int main() {
                             Prod[indice].desconto = temp.desconto;
                             Prod[indice].valorFinal = temp.valorFinal;
                             
-                            indice++;
+                            FILE *produto;
+                            produto = fopen("\\\\192.168.68.101\\html\\produtos.txt", "a");
+
+                            if (produto == NULL){
+                                printf("Não foi possivel criar/editar o arquivo.");
+                                return 1;
+                            }
+
+                            fprintf(produto,"%d",temp.id);
+                            fprintf(produto, ",");
+                            fprintf(produto,"%s",temp.nomeProduto);
+                            fprintf(produto, ",");
+                            fprintf(produto,"%d",temp.qtd);
+                            fprintf(produto, ",");
+                            fprintf(produto,"%0.2f",temp.precoUnidade);
+                            fprintf(produto, ",");
+                            fprintf(produto,"%0.2f",temp.desconto);
+                            fprintf(produto, ",");
+                            fprintf(produto,"%0.2f",temp.valorFinal);
+                            fprintf(produto, "\n");
+                            fclose(produto);
                             
                             printf("Produto criado com sucesso.\n");
 

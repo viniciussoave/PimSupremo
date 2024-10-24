@@ -175,6 +175,15 @@ if(existir2){
     fgets(x.cnpj, sizeof(x.cnpj), stdin);
     x.cnpj[strcspn(x.cnpj, "\n")] = 0; 
     
+    while(strlen(x.cnpj)<14){
+     
+        printf("Escreva um cpnj existente\n");
+         printf("Fale o cnpj\n");
+    fgets(x.cnpj, sizeof(x.cnpj), stdin);
+    x.cnpj[strcspn(x.cnpj, "\n")] = 0;
+     
+    }
+    
     if(strlen(x.cnpj)>14){
         x.cnpj[14]='\0';
     }

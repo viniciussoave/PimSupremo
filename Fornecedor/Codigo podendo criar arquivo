@@ -171,10 +171,12 @@ if(existir2){
     
 
 
-    printf("Fale o cnpj\n");
+    printf("Fale o cnpj (apenas numeros)\n");
     fgets(x.cnpj, sizeof(x.cnpj), stdin);
     x.cnpj[strcspn(x.cnpj, "\n")] = 0; 
     
+    
+    //while para ficar apenas os caracter necessario
     while(strlen(x.cnpj)<14){
      
         printf("Escreva um cpnj existente\n");
@@ -412,6 +414,12 @@ int main()
 { 
     FILE*arquivo;
     arquivo=fopen("Teste.txt","a");
+if (arquivo == NULL) {
+        perror("Arquivo nao abriu");
+        return 1;
+    }
+
+
 
      inserir fornecedor[100]; 
     inserir x;
@@ -454,5 +462,6 @@ do{
 }
 }while(numero !=5);	
 arquivoteste(arquivo,arrayforne,fornecedor);
+fclose(arquivo);
 	return 0;
 } 

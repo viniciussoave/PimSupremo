@@ -251,6 +251,16 @@ if(existir5){
         x.cep[8]='\0';
     }
     
+    
+    
+    while(strlen(x.cep)<8){
+        printf("Escreva um Cep existente\n");
+        fgets(x.cep, sizeof(x.cep), stdin);
+    x.cep[strcspn(x.cep, "\n")] = 0; 
+    }
+    if(strlen(x.cep) > 8) {
+    x.cep[8] = '\0'; 
+}
     printf("Fale o tipo\n");
     fgets(x.tipo, sizeof(x.tipo), stdin);
     x.tipo[strcspn(x.tipo, "\n")] = 0; 
@@ -387,9 +397,7 @@ void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
         printf("CEP: %s\n", fornecedor[j].cep);
         printf("Tipo: %s\n", fornecedor[j].tipo);
     }
-    if(number==2){
-        printf("escreva o cnpj\n");
-    }
+   
 }
 
 //Salvar os arquivos
@@ -450,7 +458,7 @@ do{
 	case 1:
 	   fornecedor[arrayforne++] = cadastro(fornecedor,arrayforne);
 	         arquivoteste(arquivo, arrayforne, fornecedor);
-	         fclose(arquivo);
+	         
 	break;
 	case 2:
 		linha();

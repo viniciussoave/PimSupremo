@@ -136,6 +136,12 @@ int compemail;
 int compcep;
     printf("Fale o numero do id\n");
     scanf("%f", &x.id);
+    while (x.id < 0 || x.id >= 1000) {
+    printf("Escreva um id de 0 até 999\n");
+    printf("Fale o numero do id\n");
+    scanf("%f", &x.id);
+}
+    
     for(j=0;j<arrayforne;j++){
        if(fornecedor[j].id ==x.id){
             existir=1;

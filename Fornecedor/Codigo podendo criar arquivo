@@ -419,10 +419,10 @@ void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
 }
 
 //Salvar os arquivos
-void arquivoteste(FILE *arquivo,int arrayforne,inserir fornecedor[]){
+void arquivosalvar(FILE *arquivo,int arrayforne,inserir fornecedor[]){
     int i;
     for(i=0;i<arrayforne;i++){
-        fprintf(arquivo,"______________________________________________\n");
+   
         fprintf(arquivo," %0.f, ", fornecedor[i].id); 
           fprintf(arquivo, "%s, ", fornecedor[i].nome);
      
@@ -437,13 +437,33 @@ void arquivoteste(FILE *arquivo,int arrayforne,inserir fornecedor[]){
     
    
 }
-
-
+//ler o arquivo
+void arquivoleitura(char *arquivo, inserir fornecedor[], int *arrayforne) {
+    FILE *file = fopen(arquivo, "r");
+    
+    
+    
+     while (fscanf(file, "%f, %99[^,], %99[^,], %99[^,], %99[^,], %99[^,], %99[^\n]\n",
+                  &fornecedor[*arrayforne].id,
+                  fornecedor[*arrayforne].nome,
+                  fornecedor[*arrayforne].cnpj,
+                  fornecedor[*arrayforne].contato,
+                  fornecedor[*arrayforne].email,
+                  fornecedor[*arrayforne].cep,
+                  fornecedor[*arrayforne].tipo) == 7) {
+        (*arrayforne)++;
+    }
+    
+    
+    
+    
+    
+}
 int main()
 
 { 
     FILE*arquivo;
-    arquivo=fopen("Teste.txt","a");
+    arquivo=fopen("Fornecedor.txt","a");
 if (arquivo == NULL) {
         perror("Arquivo nao abriu");
         return 1;
@@ -455,6 +475,7 @@ if (arquivo == NULL) {
     inserir x;
     int arrayprod=0,arrayforne=0;
     int i,j;
+        arquivoleitura("Fornecedor.txt", fornecedor, &arrayforne);
 x.id = 0;
     strcpy(x.nome, "");
     strcpy(x.contato, "");
@@ -475,7 +496,7 @@ getchar();
 	switch(numero) {
 	case 1:
 	   fornecedor[arrayforne++] = cadastro(fornecedor,arrayforne);
-	         arquivoteste(arquivo, arrayforne, fornecedor);
+	         arquivosalvar(arquivo, arrayforne, fornecedor);
 	         
 	break;
 	case 2:

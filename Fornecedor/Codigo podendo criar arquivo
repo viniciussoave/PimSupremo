@@ -495,7 +495,9 @@ do{
 getchar();
 	switch(numero) {
 	case 1:
+	
 	   fornecedor[arrayforne++] = cadastro(fornecedor,arrayforne);
+	   FILE *arquivo = fopen("Fornecedor.txt", "w");
 	         arquivosalvar(arquivo, arrayforne, fornecedor);
 	         
 	break;

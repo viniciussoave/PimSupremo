@@ -380,6 +380,50 @@ printf("|NOME");
 printf("|");
 }
 
+
+
+//Salvar os arquivos
+void arquivosalvar(FILE *arquivo,int arrayforne,inserir fornecedor[]){
+    int i;
+    for(i=0;i<arrayforne;i++){
+   
+        fprintf(arquivo," %0.f, ", fornecedor[i].id); 
+          fprintf(arquivo, "%s, ", fornecedor[i].nome);
+     
+        fprintf(arquivo,"%s, ", fornecedor[i].cnpj);
+        fprintf(arquivo," %s, ", fornecedor[i].contato);
+        fprintf(arquivo," %s, ", fornecedor[i].email);
+        fprintf(arquivo," %s, ", fornecedor[i].cep);
+        fprintf(arquivo," %s ", fornecedor[i].tipo);
+        fprintf(arquivo,"\n");
+        
+    }
+    
+   
+}
+
+//ler o arquivo
+void arquivoleitura(char *arquivo, inserir fornecedor[], int *arrayforne) {
+    FILE *file = fopen(arquivo, "r");
+    
+    
+    
+     while (fscanf(file, "%f, %99[^,], %99[^,], %99[^,], %99[^,], %99[^,], %99[^\n]\n",
+                  &fornecedor[*arrayforne].id,
+                  fornecedor[*arrayforne].nome,
+                  fornecedor[*arrayforne].cnpj,
+                  fornecedor[*arrayforne].contato,
+                  fornecedor[*arrayforne].email,
+                  fornecedor[*arrayforne].cep,
+                  fornecedor[*arrayforne].tipo) == 7) {
+        (*arrayforne)++;
+    }
+    
+    
+    
+    
+    
+}
 // pesquisar 3 opção
 void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
     int number;
@@ -468,53 +512,15 @@ if(number ==1){
         break;
    } 
    
- 
+ FILE *arquivo = fopen("Fornecedor.txt", "w");
+ arquivosalvar(arquivo, arrayforne, fornecedor);
+    fclose(arquivo);
 }
 
 
 }
 
-//Salvar os arquivos
-void arquivosalvar(FILE *arquivo,int arrayforne,inserir fornecedor[]){
-    int i;
-    for(i=0;i<arrayforne;i++){
-   
-        fprintf(arquivo," %0.f, ", fornecedor[i].id); 
-          fprintf(arquivo, "%s, ", fornecedor[i].nome);
-     
-        fprintf(arquivo,"%s, ", fornecedor[i].cnpj);
-        fprintf(arquivo," %s, ", fornecedor[i].contato);
-        fprintf(arquivo," %s, ", fornecedor[i].email);
-        fprintf(arquivo," %s, ", fornecedor[i].cep);
-        fprintf(arquivo," %s ", fornecedor[i].tipo);
-        fprintf(arquivo,"\n");
-        
-    }
-    
-   
-}
-//ler o arquivo
-void arquivoleitura(char *arquivo, inserir fornecedor[], int *arrayforne) {
-    FILE *file = fopen(arquivo, "r");
-    
-    
-    
-     while (fscanf(file, "%f, %99[^,], %99[^,], %99[^,], %99[^,], %99[^,], %99[^\n]\n",
-                  &fornecedor[*arrayforne].id,
-                  fornecedor[*arrayforne].nome,
-                  fornecedor[*arrayforne].cnpj,
-                  fornecedor[*arrayforne].contato,
-                  fornecedor[*arrayforne].email,
-                  fornecedor[*arrayforne].cep,
-                  fornecedor[*arrayforne].tipo) == 7) {
-        (*arrayforne)++;
-    }
-    
-    
-    
-    
-    
-}
+
 int main()
 
 { 

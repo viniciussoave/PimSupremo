@@ -383,12 +383,9 @@ printf("|");
 // pesquisar 3 opção
 void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
     int number;
+    int number2;
     int j;
     int verificar;
-    printf("escolha como voce quer achar o fornecedor\n");
-    printf("1-Pelo id\n");
-    scanf("%d",&number);
-    if(number ==1){
         printf("Escreva o id\n");
      scanf("%f",&x.id);
         
@@ -414,8 +411,33 @@ void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
         printf("Email: %s\n", fornecedor[j].email);
         printf("CEP: %s\n", fornecedor[j].cep);
         printf("Tipo: %s\n", fornecedor[j].tipo);
-    }
+        
+        printf("o que voce quer fazer\n");
+        printf("1-Modificar algum dado\n");
+        printf("2-Sair\n");
+        scanf("%d",&number);
+if(number ==1){
+   printf("o que voce quer modificar?\n");
+   printf("1-ID\n");
+   printf("2-Nome\n");
+   printf("3-CNPJ\n");
+   printf("4-Contato\n");
+   printf("5-Email\n");
+   printf("6-Cep\n");
+   printf("7-Tipo\n");
+   scanf("%d",&number2);
+   switch(number2){
+       case 1:
+       printf("oi\n");
+       break;
+        case 2:
+        printf("o\n");
+        break;
+   } 
    
+}
+
+
 }
 
 //Salvar os arquivos
@@ -430,7 +452,7 @@ void arquivosalvar(FILE *arquivo,int arrayforne,inserir fornecedor[]){
         fprintf(arquivo," %s, ", fornecedor[i].contato);
         fprintf(arquivo," %s, ", fornecedor[i].email);
         fprintf(arquivo," %s, ", fornecedor[i].cep);
-        fprintf(arquivo," %s, ", fornecedor[i].tipo);
+        fprintf(arquivo," %s ", fornecedor[i].tipo);
         fprintf(arquivo,"\n");
         
     }
@@ -485,7 +507,7 @@ x.id = 0;
     strcpy(x.cep, "");
 	int numero;
 do{
-    linha();
+   printf("====== menu de fornecedores======\n");
 	printf("1-Cadastrar fornecedor\n");
 	printf("2-Mostrar tabela dos fornecedores\n");
 	printf("3-Pesquisar Fornecedor\n");

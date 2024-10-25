@@ -426,15 +426,49 @@ if(number ==1){
    printf("6-Cep\n");
    printf("7-Tipo\n");
    scanf("%d",&number2);
+      getchar(); 
    switch(number2){
        case 1:
-       printf("oi\n");
+       printf("Informe o Id\n");
+       scanf("%f",&fornecedor[j].id);
        break;
         case 2:
-        printf("o\n");
+        printf("Informe o nome\n");
+        fgets(fornecedor[j].nome,sizeof(fornecedor[j].nome),stdin);
+        fornecedor[j].nome[strcspn(fornecedor[j].nome, "\n")] = 0;
+        break;
+        case 3:
+        printf("Informe o cnpj\n");
+        fgets(fornecedor[j].cnpj,sizeof(fornecedor[j].cnpj),stdin);
+        fornecedor[j].cnpj[strcspn(fornecedor[j].cnpj, "\n")] = 0;
+        break;
+        
+        case 4:
+        printf("Informe o contato\n");
+        fgets(fornecedor[j].contato,sizeof(fornecedor[j].contato),stdin);
+        fornecedor[j].contato[strcspn(fornecedor[j].contato, "\n")] = 0;
+        break;
+        
+        case 5:
+        printf("Informe o Email\n");
+        fgets(fornecedor[j].email,sizeof(fornecedor[j].email),stdin);
+        fornecedor[j].email[strcspn(fornecedor[j].email, "\n")] = 0;
+        break;
+        
+        case 6:
+        printf("Informe o cep\n");
+         fgets(fornecedor[j].cep,sizeof(fornecedor[j].cep),stdin);
+        fornecedor[j].cep[strcspn(fornecedor[j].cep, "\n")] = 0;
+        break;
+        
+        case 7:
+        printf("Informe o tipo\n");
+         fgets(fornecedor[j].tipo,sizeof(fornecedor[j].tipo),stdin);
+        fornecedor[j].tipo[strcspn(fornecedor[j].tipo, "\n")] = 0;
         break;
    } 
    
+ 
 }
 
 
@@ -535,6 +569,8 @@ getchar();
 		break;
 		case 3:
 		pesquisar1(arrayforne,fornecedor, x);
+
+
 		break;
 }
 }while(numero !=5);	

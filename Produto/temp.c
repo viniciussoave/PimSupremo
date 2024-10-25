@@ -50,12 +50,11 @@ int ConsultaIDrep(int idConsulta) {
         for(x=0;x<indice;x++){ //verificar se o ID novo já tem no arquivo produtos.txt
             if(idConsulta == Ids[x]){
                 return 1;
-            } else {
-                return 0;
             }
         }
     fclose(produtos);
     indice = 0;
+    return 0;
 }
 
 void ConsultaProd(){
@@ -211,7 +210,7 @@ int main() {
                                 return 1;
                             }
 
-                            if(ConsultaIDrep(temp.id)){
+                            if(ConsultaIDrep(temp.id) == 1){
                                 printf("Erro: Já tem um produto com esse id.\n");
                                 memset(&temp, 0, sizeof(temp));
                                 system("pause");

@@ -431,6 +431,9 @@ void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
     int number2;
     int j;
     int verificar;
+      float idnovo;
+          int idExistente = 0;
+          int i;
         printf("Escreva o id\n");
      scanf("%f",&x.id);
         
@@ -474,8 +477,30 @@ if(number ==1){
       getchar(); 
    switch(number2){
        case 1:
-       printf("Informe o Id\n");
-       scanf("%f",&fornecedor[j].id);
+       {
+                  
+                    printf("Informe o novo ID:\n");
+                    scanf("%f", &idnovo);
+                    
+                  
+                
+                    for (i = 0; i < arrayforne; i++) {
+                        if (fornecedor[i].id == idnovo) {
+                            idExistente = 1; 
+                            break;
+                        }
+                    }
+
+                    if (!idExistente) {
+                        fornecedor[j].id = idnovo;
+                        printf("Novo id: %.0f\n", idnovo);
+                    } else {
+                        printf("ID já existente\n");
+                    }
+                }
+       
+       
+       
        break;
         case 2:
         printf("Informe o nome\n");

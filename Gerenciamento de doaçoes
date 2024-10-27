@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+ 
+ typedef struct{
+   char produto[50];
+   int qtd;
+   char data[20]
+
+ }doaçao;
+
+
+ void registrodoacao(){
+ doaçao doaçao;
+
+  FILE *arquiv = fopen("registro_doaçãoes.txt","a");
+
+    if (arquiv == NULL){
+
+      perror("erro ao criar o arquivo!\n");
+      return 1;
+    }
+
+     printf("Produto a ser doado: ");
+     fgets(doaçao.produto, sizeof(doaçao.produto), stdin);
+     
+     printf("Quantidade a ser doado: ");
+     scanf("%d", &doaçao.qtd);
+     printf("Data da doação: ");
+     

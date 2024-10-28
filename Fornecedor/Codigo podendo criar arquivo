@@ -437,6 +437,8 @@ void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
           int i;
           char nomenovo[100];
         int nomeExiste=0;
+        int cnpjExiste=0;
+        char cnpjnovo[100];
         printf("Escreva o id\n");
      scanf("%f",&x.id);
         
@@ -527,9 +529,25 @@ if(number ==1){
         
         break;
         case 3:
+        
         printf("Informe o cnpj\n");
-        fgets(fornecedor[j].cnpj,sizeof(fornecedor[j].cnpj),stdin);
-        fornecedor[j].cnpj[strcspn(fornecedor[j].cnpj, "\n")] = 0;
+        fgets(cnpjnovo, sizeof(cnpjnovo), stdin);
+        cnpjnovo[strcspn(cnpjnovo, "\n")] = '\0';
+        
+    for (i = 0; i < arrayforne; i++) {
+    if(strcmp(fornecedor[i].cnpj,cnpjnovo)==0){
+        cnpjExiste=1;
+        break;
+    }
+    }
+    if(!cnpjExiste){
+        strcpy(fornecedor[j].cnpj,cnpjnovo);
+        printf("cnpj novo é %s\n",cnpjnovo);
+    }else{
+         printf("cnpj já existente\n");
+    }
+        
+        
         break;
         
         case 4:

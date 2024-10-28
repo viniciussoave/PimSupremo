@@ -511,7 +511,7 @@ if(number ==1){
         nomenovo[strcspn(nomenovo, "\n")] = '\0';
         
     for (i = 0; i < arrayforne; i++) {
-    if(strcmp(fornecedor[j].nome,nomenovo)==0){
+    if(strcmp(fornecedor[i].nome,nomenovo)==0){
         nomeExiste=1;
         break;
     }

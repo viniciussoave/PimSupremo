@@ -435,6 +435,8 @@ void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
       float idnovo;
           int idExistente = 0;
           int i;
+          char nomenovo[100];
+        int nomeExiste=0;
         printf("Escreva o id\n");
      scanf("%f",&x.id);
         
@@ -504,8 +506,7 @@ if(number ==1){
        
        break;
         case 2:
-        char nomenovo[100];
-        int nomeExiste=0;
+        
         printf("Informe o novo nome:\n");
         fgets(nomenovo, sizeof(nomenovo), stdin);
         nomenovo[strcspn(nomenovo, "\n")] = '\0';
@@ -518,7 +519,7 @@ if(number ==1){
     }
     if(!nomeExiste){
         strcpy(fornecedor[j].nome,nomenovo);
-        printf("nome novo é %s",nomenovo);
+        printf("nome novo é %s\n",nomenovo);
     }else{
          printf("Nome já existente\n");
     }

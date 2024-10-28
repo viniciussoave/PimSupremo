@@ -1,5 +1,6 @@
 
 
+
 #include <stdio.h>
 #include <string.h>
 
@@ -503,9 +504,26 @@ if(number ==1){
        
        break;
         case 2:
-        printf("Informe o nome\n");
-        fgets(fornecedor[j].nome,sizeof(fornecedor[j].nome),stdin);
-        fornecedor[j].nome[strcspn(fornecedor[j].nome, "\n")] = 0;
+        char nomenovo[100];
+        int nomeExiste=0;
+        printf("Informe o novo nome:\n");
+        fgets(nomenovo, sizeof(nomenovo), stdin);
+        nomenovo[strcspn(nomenovo, "\n")] = '\0';
+        
+    for (i = 0; i < arrayforne; i++) {
+    if(strcmp(fornecedor[j].nome,nomenovo)==0){
+        nomeExiste=1;
+        break;
+    }
+    }
+    if(!nomeExiste){
+        strcpy(fornecedor[j].nome,nomenovo);
+        printf("nome novo é %s",nomenovo);
+    }else{
+         printf("Nome já existente\n");
+    }
+        
+        
         break;
         case 3:
         printf("Informe o cnpj\n");

@@ -567,6 +567,18 @@ if(number ==1){
         printf("Informe o contato\n");
          fgets(contatonovo, sizeof(contatonovo), stdin);
         contatonovo[strcspn(contatonovo, "\n")] = '\0';
+        while(strlen(contatonovo)<10){
+        printf("Escreva um contato existente\n");
+        printf("Fale o contato\n");
+    fgets(contatonovo, sizeof(contatonovo), stdin);
+    contatonovo[strcspn(contatonovo, "\n")] = 0; 
+    }
+    
+    if(strlen(contatonovo)>11){
+        contatonovo[11]='\0';
+    }
+        
+        
         
     for (i = 0; i < arrayforne; i++) {
     if(strcmp(fornecedor[i].contato,contatonovo)==0){
@@ -603,12 +615,21 @@ if(number ==1){
         break;
         
         case 6:
+        char cepnovo[100];
         printf("Informe o cep\n");
-         fgets(fornecedor[j].cep,sizeof(fornecedor[j].cep),stdin);
-        fornecedor[j].cep[strcspn(fornecedor[j].cep, "\n")] = 0;
+         fgets(cepnovo,sizeof(cepnovo),stdin);
+        cepnovo[strcspn(cepnovo, "\n")] = 0;
         
+         while(strlen(cepnovo)<8){
+        printf("Escreva um Cep existente\n");
+        fgets(cepnovo, sizeof(cepnovo), stdin);
+    cepnovo[strcspn(cepnovo, "\n")] = 0; 
+    }
+    if(strlen(cepnovo) > 8) {
+    cepnovo[8] = '\0'; 
+}
         
-        
+        strcpy(fornecedor[j].cep,cepnovo);
         
         break;
         

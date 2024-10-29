@@ -30,36 +30,77 @@ float stringParaFloat(char *str) {
     return atof(str);
 }
 
-void exibirTabela(produto Prod[], int indice) {
-    if (indice == 0) {
-        printf("Nenhum produto cadastrado.\n");
-        return;
+int ConsultaIDrep(int idConsulta) {
+    char linha[999];
+    int x;
+    int Ids[999]; //armazena os ids que serão lidos
+    int indice = 0;
+    FILE *produtos;
+    produtos = fopen("produtos.txt","r");
+
+    if (produtos == NULL) {
+        perror("Erro ao abrir o arquivo");
     }
 
-    int maxNome = 4;
-
-    for (int i = 0; i < indice; i++) {
-        if (strlen(Prod[i].nomeProduto) > maxNome) {
-            maxNome = strlen(Prod[i].nomeProduto);
+    while (fgets(linha, sizeof(linha), produtos)) { //armazena os valores de ID
+        sscanf(linha, "%d", &Ids[indice]);
+        indice++;
+    }
+ 
+        for(x=0;x<indice;x++){ //verificar se o ID novo já tem no arquivo produtos.txt
+            if(idConsulta == Ids[x]){
+                return 1;
+            }
         }
+    fclose(produtos);
+    indice = 0;
+    return 0;
+}
+
+void ConsultaProd(){
+     FILE *arquivo;
+    char linha[999];
+    int id, qtd;
+    float precoPorUnidade, desconto, precoFinal;
+    char nome[50];
+
+    arquivo = fopen("produtos.txt", "r");
+    if (arquivo == NULL) {
+        perror("Erro ao abrir o arquivo");
     }
 
-    printf("=== Produtos Cadastrados ===\n");
-    printf("| ID | Nome%*s | Quantidade | Preço Unitário | Desconto | Valor Final |\n", maxNome - 4, "");
-    printf("---------------------------------------------------------------\n");
-    
-    for (int i = 0; i < indice; i++) {
-        printf("| %2d | %-*s | %10d | %13.2f | %8.2f%% | %11.2f |\n", 
-               Prod[i].id, 
-               maxNome, 
-               Prod[i].nomeProduto, 
-               Prod[i].qtd, 
-               Prod[i].precoUnidade, 
-               Prod[i].desconto, 
-               Prod[i].valorFinal);
+
+    while (fgets(linha, sizeof(linha), arquivo)) {
+
+        sscanf(linha, "%d,%49[^,],%d,%f,%f,%f", &id, nome, &qtd, &precoPorUnidade, &desconto, &precoFinal); //essa bomba lê a linha e organiza cada valor em sua devida variavel.
+
+   
+        printf("ID: %d, Nome: %s, Quantidade: %d, Preço por unidade: R$%.2f, Desconto: %.2f, Preço Final: %.2f\n",
+               id, nome, qtd, precoPorUnidade, desconto, precoFinal); //essa bomba mostra os valores.
     }
-    
-    printf("---------------------------------------------------------------\n");
+
+
+    fclose(arquivo);
+}
+
+void EditarProd(){
+            int pesquisaID = 0;
+            char linha[999];
+            printf("Digite o ID do produto que você quer alterar: ");
+            scanf("%d", &pesquisaID);
+            getchar();
+
+        arquivo = fopen("produtos.txt", "r");
+        if (arquivo == NULL) {
+            perror("Erro ao abrir o arquivo");
+        }
+
+
+        while (fgets(linha, sizeof(linha), arquivo)) {
+        
+        
+        }
+            
 }
 
 int main() {
@@ -79,7 +120,7 @@ int main() {
         printf("Escolha uma opção: ");
         scanf("%d", &subOpcao);
         getchar();
-        system("cls");
+        system("clear");
 
         switch (subOpcao) {
             case 1:
@@ -88,106 +129,85 @@ int main() {
                     printf("Cadastro de produtos:\n");
                     printf("1. Id = %d \n", temp.id);
                     printf("2. Nome = %s \n", temp.nomeProduto);
-                    printf("3. Quantidade = %d \n", temp.qtd);
-                    printf("4. Preço por unidade: %.2f \n", temp.precoUnidade);
-                    printf("5. Desconto: %.2f%% \n", temp.desconto);
+                    printf("3. Preço por unidade: %.2f \n", temp.precoUnidade);
+                    printf("4. Desconto: %.2f%% \n", temp.desconto);
                     printf("\n");
                     printf("Valor Final por unidade: %.2f \n", temp.valorFinal);
-                    printf("6. Criar produto\n");
-                    printf("7. Cancelar\n");
+                    printf("5. Criar produto\n");
+                    printf("6. Cancelar\n");
                     printf("Escolha um dos valores para editar ou criar o produto: \n");
                     scanf("%d", &subSubOpcao);
                     getchar();
                     
                     switch (subSubOpcao) {
                         case 1:
-                            system("cls");
+                            system("clear");
                             printf("Id (1-999) = ");
                             scanf("%d", &temp.id);
                             getchar();
-                            system("cls");
+                            system("clear");
                             break;
                         case 2:
-                            system("cls");
+                            system("clear");
                             printf("Nome = ");
                             fgets(temp.nomeProduto, sizeof(temp.nomeProduto), stdin);
                             temp.nomeProduto[strcspn(temp.nomeProduto, "\n")] = '\0';
-                            system("cls");
+                            system("clear");
                             break;
                         case 3:
-                            system("cls");
-                            printf("Quantidade = ");
-                            scanf("%d", &temp.qtd);
-                            getchar();
-                            system("cls");
-                            break;
-                        case 4:
-                            system("cls");
+                            system("clear");
                             char precoStr[20];
                             printf("Preço por unidade = ");
                             fgets(precoStr, sizeof(precoStr), stdin);
                             temp.precoUnidade = stringParaFloat(precoStr);
-                            system("cls");
+                            system("clear");
                             break;
-                        case 5:
-                            system("cls");
+                        case 4:
+                            system("clear");
                             char descontoStr[20];
                             printf("Desconto = ");
                             fgets(descontoStr, sizeof(descontoStr), stdin);
                             temp.desconto = stringParaFloat(descontoStr);
-                            system("cls");
+                            system("clear");
                             break;
-                        case 6:
-                            system("cls");
+                        case 5:
+                            system("clear");
 
                             if (temp.id < 1 || temp.id > 999) {
                                 printf("Erro: ID deve estar entre 1 e 999.\n");
                                 memset(&temp, 0, sizeof(temp));
                                 system("pause");
-                                system("cls");
+                                system("clear");
                                 break;
                             }
 
-                            if (verificarID(Prod, indice, temp.id)) {
-                                printf("Erro: Já existe um produto com esse ID.\n"); //tenho que corrigir o problema de verificar ID
-                                memset(&temp, 0, sizeof(temp));
-                                system("pause");
-                                system("cls");
-                                break;
-                            }
-                            
                             if (strlen(temp.nomeProduto) == 0) {
                                 printf("Erro: Nome do produto não pode estar vazio.\n");
                                 memset(&temp, 0, sizeof(temp));
                                 system("pause");
-                                system("cls");
+                                system("clear");
                                 break;
                             }
 
-                            if (temp.qtd <= 0) {
-                                printf("Erro: Quantidade deve ser maior que zero.\n");
-                                memset(&temp, 0, sizeof(temp));
-                                system("pause");
-                                system("cls");
-                                break;
-                            }
+                            temp.valorFinal = temp.precoUnidade * (1 - (temp.desconto / 100));
+                            temp.qtd = 0;
 
-                            temp.valorFinal = (temp.precoUnidade * temp.qtd) * (1 - (temp.desconto / 100));
-                            
-                            Prod[indice].id = temp.id;
-                            strcpy(Prod[indice].nomeProduto, temp.nomeProduto);
-                            Prod[indice].qtd = temp.qtd;
-                            Prod[indice].precoUnidade = temp.precoUnidade;
-                            Prod[indice].desconto = temp.desconto;
-                            Prod[indice].valorFinal = temp.valorFinal;
-                            
                             FILE *produto;
-                            produto = fopen("\\\\192.168.68.101\\html\\produtos.txt", "a");
+                            produto = fopen("produtos.txt", "a");
 
                             if (produto == NULL){
                                 printf("Não foi possivel criar/editar o arquivo.");
                                 return 1;
                             }
+
+                            if(ConsultaIDrep(temp.id) == 1){
+                                printf("Erro: Já tem um produto com esse id.\n");
+                                memset(&temp, 0, sizeof(temp));
+                                system("pause");
+                                system("clear");
+                                break;
+                            }
+
 
                             fprintf(produto,"%d",temp.id);
                             fprintf(produto, ",");
@@ -208,29 +228,30 @@ int main() {
                             memset(&temp, 0, sizeof(temp));
                             
                             system("pause");
-                            system("cls");
+                            system("clear");
 
                             break;
-                        case 7:
+                        case 6:
                              memset(&temp, 0, sizeof(temp));
-                             system("cls");
+                             system("clear");
                              break;                        
                         default:
                              printf("Escolha uma opção válida.\n");
                              memset(&temp, 0, sizeof(temp));
                              break;
                     }
-                } while (subSubOpcao != 7 && subSubOpcao != 6);
+                } while (subSubOpcao != 6 && subSubOpcao != 5);
 
                 break;
 
             case 2:
-                exibirTabela(Prod, indice);
+                ConsultaProd();
                 system("pause"); 
-                system("cls"); 
+                
                 break;
 
             case 3:
+                EditarProd();
                 // Implementar edição de produtos aqui
                 break;
 

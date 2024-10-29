@@ -1,0 +1,23 @@
+#include<stdio.h>
+typedef struct{   // variaveis das vendas
+    float id;
+    float precouni;
+    float precototal;
+    float desconto;
+    float quantidade;
+    char nome[100];
+}vendas;
+
+void telaVenda(){
+    vendas x;
+   printf("Qual o id\n");
+   scanf("%f", &x.id);
+   
+}
+
+int main(){
+   vendas x;
+     telaVenda();
+    return 0;
+ 
+}

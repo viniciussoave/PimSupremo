@@ -1,4 +1,5 @@
 
+
 #include <stdio.h>
 #include <string.h>
 
@@ -458,7 +459,7 @@ void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
     scanf("%f", &x.id);
     }
     }while(!verificar);
-    
+     printf("====== Fornecedor ======\n");
           printf("ID encontrado: %0.f\n", x.id); 
           printf("Nome: %s\n", fornecedor[j].nome);
         printf("CNPJ: %s\n", fornecedor[j].cnpj);
@@ -466,7 +467,7 @@ void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
         printf("Email: %s\n", fornecedor[j].email);
         printf("CEP: %s\n", fornecedor[j].cep);
         printf("Tipo: %s\n", fornecedor[j].tipo);
-        
+         printf("=======================\n");
         printf("o que voce quer fazer\n");
         printf("1-Modificar algum dado\n");
         printf("2-Sair\n");
@@ -480,6 +481,7 @@ if(number ==1){
    printf("5-Email\n");
    printf("6-Cep\n");
    printf("7-Tipo\n");
+   printf("=======================\n");
    scanf("%d",&number2);
       getchar(); 
    switch(number2){
@@ -680,6 +682,7 @@ do{
 	printf("2-Mostrar tabela dos fornecedores\n");
 	printf("3-Pesquisar Fornecedor\n");
 	printf("5-Sair \n");
+	printf("================================\n");
 	printf("escolha a opcao\n");
 	scanf("%d",&numero);
 getchar();
@@ -692,7 +695,7 @@ getchar();
 	         
 	break;
 	case 2:
-		linha();
+		
 		 tabela1(arrayforne, fornecedor);
 		
 		printf("\n");

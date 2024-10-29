@@ -485,10 +485,13 @@ if(number ==1){
    switch(number2){
        case 1:
        {
-                  
                     printf("Informe o novo ID:\n");
                     scanf("%f", &idnovo);
-                
+                while (idnovo< 0 || idnovo >= 1000) {
+    printf("Escreva um id de 0 até 999\n");
+    printf("Fale o numero do id\n");
+    scanf("%f", &idnovo);
+}
                     for (i = 0; i < arrayforne; i++) {
                         if (fornecedor[i].id == idnovo) {
                             idExistente = 1; 
@@ -531,7 +534,18 @@ if(number ==1){
         printf("Informe o cnpj\n");
         fgets(cnpjnovo, sizeof(cnpjnovo), stdin);
         cnpjnovo[strcspn(cnpjnovo, "\n")] = '\0';
-        
+        while(strlen(cnpjnovo)<14){
+     
+        printf("Escreva um cpnj existente(14 numeros)\n");
+         printf("Fale o cnpj\n");
+    fgets(cnpjnovo, sizeof(cnpjnovo), stdin);
+    cnpjnovo[strcspn(cnpjnovo, "\n")] = 0;
+     
+    }
+    
+    if(strlen(cnpjnovo)>14){
+        cnpjnovo[14]='\0';
+    }
     for (i = 0; i < arrayforne; i++) {
     if(strcmp(fornecedor[i].cnpj,cnpjnovo)==0){
         cnpjExiste=1;

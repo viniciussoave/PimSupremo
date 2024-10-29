@@ -23,8 +23,8 @@ int verificarID(produto Prod[], int indice, int id) {
 
 float stringParaFloat(char *str) {
     for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] == ',') {
-            str[i] = '.';
+        if (str[i] == '.') {
+            str[i] = ',';
         }
     }
     return atof(str);
@@ -120,7 +120,7 @@ void EditarProd(){
                     printf("1. ID = %d\n", id);
                     printf("2. Nome = %s\n", nome);
                     printf("3. Preço por unidade = %.2f\n", precoPorUnidade);
-                    printf("4. Desconto = %.2f\n",desconto);
+                    printf("4. Desconto = %f\n",desconto);
                     printf("5. Alterar produto\n");
                     printf("6. Cancelar");
                     printf("\nO que deseja alterar: ");
@@ -200,6 +200,8 @@ void EditarProd(){
 int main() {
     int subOpcao, subSubOpcao = 0;
     int indice = 0;
+
+    setlocale(LC_ALL, "pt_BR.UTF-8");
 
     produto temp = {0};
     produto Prod[100] = {0};

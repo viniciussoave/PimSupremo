@@ -84,12 +84,19 @@ void ConsultaProd(){
 }
 
 void EditarProd(){
+            int opc = 0;
             int pesquisaID = 0;
             char linha[999];
+            int id,qtd;
+            char nome[50];
+            float precoPorUnidade,desconto,precoFinal;
+            int Verifica;
             printf("Digite o ID do produto que você quer alterar: ");
             scanf("%d", &pesquisaID);
             getchar();
 
+
+        FILE *arquivo;
         arquivo = fopen("produtos.txt", "r");
         if (arquivo == NULL) {
             perror("Erro ao abrir o arquivo");
@@ -97,10 +104,32 @@ void EditarProd(){
 
 
         while (fgets(linha, sizeof(linha), arquivo)) {
-        
-        
+            sscanf(linha, "%d,%49[^,],%d,%f,%f,%f", &id, nome, &qtd, &precoPorUnidade, &desconto, &precoFinal);
+            if(id != pesquisaID){
+                //diferente do id procurado
+                FILE *arquiv;
+                arquiv = fopen("temp.txt", "a");
+                fprintf(arquiv,"%d,%s,%d,%f,%f,%f,\n", id,nome,qtd,precoPorUnidade,desconto,precoFinal);
+                fclose(arquiv);
+            } else {
+                // igual ao id procurado
+                while(opc != 5 && opc != 6){
+                    system("clear");
+                    printf("1. ID = %d\n", id);
+                    printf("2. Nome = %s\n", nome);
+                    printf("3. Preço por unidade = %.2f\n", precoPorUnidade);
+                    printf("4. Desconto = %.2f\n",desconto);
+                    printf("5. Alterar produto\n");
+                    printf("6. Cancelar");
+                    printf("\nO que deseja alterar: ");
+                    scanf("%d", &opc);
+                    getchar();
+                    //Fazer um switch case para conseguir alterar todos valores e conseguir alterar ou cancelar, Pra alterar vou ter que deletar o produtos.txt e renomear o arquivo temp.txt para produtos.txt
+                }
+
+            }
         }
-            
+        
 }
 
 int main() {

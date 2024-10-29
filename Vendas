@@ -5,14 +5,23 @@ typedef struct{   // variaveis das vendas
     float precototal;
     float desconto;
     float quantidade;
+    float valorTotal;
     char nome[100];
 }vendas;
 
 void telaVenda(){
     vendas x;
+
    printf("Qual o id\n");
    scanf("%f", &x.id);
-   
+   printf("Informe o preco do produto\n");
+   scanf("%f",&x.precouni);
+   printf("informe a quantidade\n");
+   scanf("%f",&x.quantidade);
+   printf("Informe o desconto\n");
+   scanf("%f",&x.desconto);
+   x.precototal=(x.precouni * x.quantidade);
+   printf("preco total %.3f",x.precototal);
 }
 
 int main(){

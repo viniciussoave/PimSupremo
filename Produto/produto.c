@@ -13,7 +13,8 @@ typedef struct {
 } produto;
 
 int verificarID(produto Prod[], int indice, int id) {
-    for (int i = 0; i < indice; i++) {
+	int i;
+    for (i = 0; i < indice; i++) {
         if (Prod[i].id == id) {
             return 1;
         }
@@ -22,9 +23,10 @@ int verificarID(produto Prod[], int indice, int id) {
 }
 
 float stringParaFloat(char *str) {
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] == '.') {
-            str[i] = ',';
+	int i;
+    for (i = 0; str[i] != '\0'; i++) {
+        if (str[i] == ',') {
+            str[i] = '.';
         }
     }
     return atof(str);
@@ -40,6 +42,7 @@ int ConsultaIDrep(int idConsulta) {
 
     if (produtos == NULL) {
         perror("Erro ao abrir o arquivo");
+        system("cls");
     }
 
     while (fgets(linha, sizeof(linha), produtos)) { //armazena os valores de ID
@@ -67,6 +70,7 @@ void ConsultaProd(){
     arquivo = fopen("produtos.txt", "r");
     if (arquivo == NULL) {
         perror("Erro ao abrir o arquivo");
+        system("cls");
     }
 
 
@@ -84,6 +88,7 @@ void ConsultaProd(){
 }
 
 void EditarProd(){
+            int erro=0;
             int existe = 0;
             int opc = 0;
             int pesquisaID = 0;
@@ -91,7 +96,6 @@ void EditarProd(){
             int id,qtd;
             char nome[50];
             float precoPorUnidade,desconto,precoFinal;
-            int Verifica;
             printf("Digite o ID do produto que você quer alterar: ");
             scanf("%d", &pesquisaID);
             getchar();
@@ -101,6 +105,7 @@ void EditarProd(){
         arquivo = fopen("produtos.txt", "r");
         if (arquivo == NULL) {
             perror("Erro ao abrir o arquivo");
+            system("cls");
         }
 
 
@@ -110,7 +115,7 @@ void EditarProd(){
                 //diferente do id procurado
                 FILE *arquiv;
                 arquiv = fopen("temp.txt", "a");
-                fprintf(arquiv,"%d,%s,%d,%f,%f,%f,\n", id,nome,qtd,precoPorUnidade,desconto,precoFinal);
+                fprintf(arquiv,"%d,%s,%d,%0.2f,%0.2f,%0.2f\n", id,nome,qtd,precoPorUnidade,desconto,precoFinal);
                 fclose(arquiv);
             } else {
                 // igual ao id procurado
@@ -129,9 +134,8 @@ void EditarProd(){
                     switch(opc){
                         case 1:
                             system("cls");
-                            printf("Id (1-999) = ");
-                            scanf("%d", &id);
-                            getchar();
+                            printf("Aviso: Não é possivel editar o ID.\n");
+                            system("pause");
                             system("cls");
                             break;
                         case 2:
@@ -158,23 +162,34 @@ void EditarProd(){
                             system("cls");
                             break;
                         case 5:
-                            if (id < 1 || id > 999) {
-                                printf("Erro: ID deve estar entre 1 e 999.\n");
-                                system("pause");
-                                system("cls");
-                                break;
-                            }
-
                             if (strlen(nome) == 0) {
+                                erro = 1;
                                 printf("Erro: Nome do produto não pode estar vazio.\n");
                                 system("pause");
                                 system("cls");
                                 break;
                             }
         
+                            if(precoPorUnidade<0){
+                                erro = 1;
+                                printf("Erro: O preço tem que ser positivo.\n");
+                                system("pause");
+                                system("cls");
+                                break;
+                            }
+
+                            if(desconto<0){
+                                erro = 1;
+                                printf("Erro: O desconto tem que ser positivo.\n");
+                                system("pause");
+                                system("cls");
+                                break;
+                            }
+
                             FILE *arquiv;
                             arquiv = fopen("temp.txt", "a");
-                            fprintf(arquiv,"%d,%s,%d,%f,%f,%f,\n", id,nome,qtd,precoPorUnidade,desconto,precoFinal);
+                            precoFinal = precoPorUnidade * (1 - (desconto / 100));
+                            fprintf(arquiv,"%d,%s,%d,%0.2f,%0.2f,%0.2f,\n", id,nome,qtd,precoPorUnidade,desconto,precoFinal);
                             fclose(arquiv);
                             break;
                         case 6:
@@ -186,14 +201,89 @@ void EditarProd(){
         }
         
         fclose(arquivo);
-        remove("produtos.txt");
-        rename("temp.txt", "produtos.txt");
+        
 
         if(existe == 0){
+            remove("temp.txt");
             printf("Produto não encontrado.\n");
             system("pause");
             system("cls");
+        } else {
+            if(erro == 0){
+                remove("produtos.txt");
+                rename("temp.txt", "produtos.txt");
+                system("cls");
+            } else {
+                erro = 0;
+            }
         }
+
+}
+
+void RemoverProd(){
+            int verificar = 0;
+            int existe = 0;
+            int pesquisaID = 0;
+            char linha[999];
+            int id,qtd;
+            char nome[50];
+            float precoPorUnidade,desconto,precoFinal;
+            printf("Digite o ID do produto que você quer remover: ");
+            scanf("%d", &pesquisaID);
+            getchar();
+
+            printf("Tem certeza que quer excluir o produto com o id %d? (1- Sim,2- Não)\n", pesquisaID);
+            scanf("%d", &verificar);
+            getchar();
+
+        switch(verificar){
+            case 1:
+            FILE *arquivo;
+            arquivo = fopen("produtos.txt", "r");
+            if (arquivo == NULL) {
+            perror("Erro ao abrir o arquivo");
+            system("cls");
+            }
+
+            while (fgets(linha, sizeof(linha), arquivo)) {
+                sscanf(linha, "%d,%49[^,],%d,%f,%f,%f", &id, nome, &qtd, &precoPorUnidade, &desconto, &precoFinal);
+                if(id != pesquisaID){
+                    //diferente do id procurado
+                    FILE *arquiv;
+                    arquiv = fopen("temp.txt", "a");
+                    fprintf(arquiv,"%d,%s,%d,%0.2f,%0.2f,%0.2f\n", id,nome,qtd,precoPorUnidade,desconto,precoFinal);
+                    fclose(arquiv);
+                } else {
+                    // igual ao id procurado
+                        existe = 1;
+                    }
+                }
+
+                fclose(arquivo);
+
+                if(existe == 0){
+                    remove("temp.txt");
+                    printf("Produto não encontrado.\n");
+                    system("pause");
+                    system("cls");
+            } else {
+                    remove("produtos.txt");
+                    rename("temp.txt", "produtos.txt");
+                    system("cls");
+                    printf("Produto excluido com sucesso\n");
+                    system("pause");
+                    system("cls");
+            }
+
+            break;
+            case 2:
+            break;
+            default:
+                printf("Escolha uma opção valida");
+                system("pause");
+                system("cls");
+        }
+        
 
 }
 
@@ -201,17 +291,17 @@ int main() {
     int subOpcao, subSubOpcao = 0;
     int indice = 0;
 
-    setlocale(LC_ALL, "pt_BR.UTF-8");
+    setlocale(LC_ALL,"pt-BR.UTF-8");
 
     produto temp = {0};
-    produto Prod[100] = {0};
 
     do {
         printf("=== Menu de Produtos ===\n");
         printf("1. Cadastrar Produto\n");
         printf("2. Exibir Produtos\n");
         printf("3. Editar Produtos\n");
-        printf("4. Voltar ao Menu Principal\n");
+        printf("4. Excluir Produtos\n");
+        printf("5. Voltar ao Menu Principal\n");
         printf("======================\n");
         printf("Escolha uma opção: ");
         scanf("%d", &subOpcao);
@@ -304,6 +394,30 @@ int main() {
                                 break;
                             }
 
+                            if(temp.precoUnidade<0){
+                                printf("Erro: O preço não pode ser negativo.\n");
+                                memset(&temp, 0, sizeof(temp));
+                                system("pause");
+                                system("cls");
+                                break;
+                            }
+
+                            if(temp.desconto>100){
+                                printf("Erro: O desconto não pode ser acima de 100%.\n");
+                                memset(&temp, 0, sizeof(temp));
+                                system("pause");
+                                system("cls");
+                                break;
+                            }
+
+                            if(temp.desconto<0){
+                                printf("Erro: O desconto não pode ser negativo.\n");
+                                memset(&temp, 0, sizeof(temp));
+                                system("pause");
+                                system("cls");
+                                break;
+                            }
+
 
                             fprintf(produto,"%d",temp.id);
                             fprintf(produto, ",");
@@ -342,7 +456,8 @@ int main() {
 
             case 2:
                 ConsultaProd();
-                system("pause"); 
+                system("pause");
+                system("cls");
                 
                 break;
 
@@ -352,6 +467,10 @@ int main() {
                 break;
 
             case 4:
+                RemoverProd();
+                break;
+
+            case 5:
                 // Voltar ao menu principal
                 break;
 
@@ -360,7 +479,7 @@ int main() {
                 memset(&temp, 0, sizeof(temp)); 
                 break;
         }
-    } while (subOpcao != 4);
+    } while (subOpcao != 5);
 
     return 0;
 }

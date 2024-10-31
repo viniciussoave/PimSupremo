@@ -130,11 +130,8 @@ int existir4=0;
 int existir5=0;
 int existir6=0;
 int j;
-int compnome;
-int compcnpj;
-int compcontato;
-int compemail;
-int compcep;
+int compnome;int compcnpj;int compcep;int compemail;int compcontato;
+
     printf("Fale o numero do id\n");
     scanf("%f", &x.id);
     while (x.id < 0 || x.id >= 1000) {
@@ -143,17 +140,20 @@ int compcep;
     scanf("%f", &x.id);
 }
     
-    for(j=0;j<arrayforne;j++){
+    do{for(j=0;j<arrayforne;j++){
+      existir=0;
        if(fornecedor[j].id ==x.id){
             existir=1;
             break;
        }
     }
     if(existir){
-        printf("ID ja cadastradon\n");
-        printf("Fale o numero do id\n");
+        printf("ID ja cadastrado\n");
+        printf("Fale o numero do id(1-999)\n");
     scanf("%f", &x.id);
+  
     }
+    }while(existir);
     getchar(); 
 
     printf("Fale o nome\n");
@@ -161,8 +161,9 @@ int compcep;
     x.nome[strcspn(x.nome, "\n")] = 0; 
     
     strcmp(x.nome,fornecedor[j].nome);
-for(j=0;j<arrayforne;j++){
+do{for(j=0;j<arrayforne;j++){
     compnome = strcmp(x.nome,fornecedor[j].nome);
+        existir2=0;
        if(compnome == 0){
            printf("a\n");
             existir2=1;
@@ -174,11 +175,10 @@ if(existir2){
         printf("escreva outro nome\n");
     fgets(x.nome, sizeof(x.nome), stdin);
     x.nome[strcspn(x.nome, "\n")] = 0; 
-    }
+    }}while(existir2);
     
 
-
-    printf("Fale o cnpj (apenas numeros)\n");
+    printf("Fale o cnpj (apenas numeros(14))\n");
     fgets(x.cnpj, sizeof(x.cnpj), stdin);
     x.cnpj[strcspn(x.cnpj, "\n")] = 0; 
     
@@ -196,8 +196,9 @@ if(existir2){
     if(strlen(x.cnpj)>14){
         x.cnpj[14]='\0';
     }
-    for(j=0;j<arrayforne;j++){
+    do{for(j=0;j<arrayforne;j++){
     compcnpj = strcmp(x.cnpj,fornecedor[j].cnpj);
+       existir3=0;
        if(compcnpj == 0){
            printf("a\n");
             existir3=1;
@@ -209,9 +210,9 @@ if(existir3){
         printf("escreva outro cnpj\n");
     fgets(x.cnpj, sizeof(x.cnpj), stdin);
     x.cnpj[strcspn(x.cnpj, "\n")] = 0; 
-    }
+    }}while(existir3);
 
-    printf("Fale o contato\n");
+    printf("Fale o contato (Apenas numero(10))\n");
     fgets(x.contato, sizeof(x.contato), stdin);
     x.contato[strcspn(x.contato, "\n")] = 0; 
     
@@ -227,8 +228,9 @@ if(existir3){
     }
     
     
-    for(j=0;j<arrayforne;j++){
+    do{for(j=0;j<arrayforne;j++){
     compcontato = strcmp(x.contato,fornecedor[j].contato);
+       existir4=0;
        if(compcontato == 0){
            printf("a\n");
             existir4=1;
@@ -240,7 +242,8 @@ if(existir4){
         printf("escreva outro contato\n");
     fgets(x.contato, sizeof(x.contato), stdin);
     x.contato[strcspn(x.contato, "\n")] = 0; 
-    }
+    }}while(existir4);
+
 
     printf("Fale o email\n");
     fgets(x.email, sizeof(x.email), stdin);
@@ -262,7 +265,7 @@ if(existir5){
     }
 
 
-    printf("Fale o cep\n");
+    printf("Fale o cep(Apenas numero(8))\n");
     fgets(x.cep, sizeof(x.cep), stdin);
     x.cep[strcspn(x.cep, "\n")] = 0; 
     
@@ -289,6 +292,16 @@ if(existir5){
 
 void cnpjvoid( char *cnpj){ //formatacao do cnpj
     char cnpjcerto[20];
+    int i;
+    int oi=0;
+  for (i = 0; i < strlen(cnpj); i++) {
+        if (cnpj[i] < '0' || cnpj[i] > '9') {
+       cnpj[i]='0';
+         
+        }
+    }
+    
+    
     snprintf(cnpjcerto, sizeof(cnpjcerto), "%c%c.%c%c%c.%c%c%c/%c%c%c%c-%c%c",
      cnpj[0],cnpj[1],
      cnpj[2],cnpj[3],cnpj[4],

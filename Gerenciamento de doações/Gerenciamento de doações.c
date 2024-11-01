@@ -55,7 +55,7 @@ int main() {
         printf("Escolha uma opção: ");
         scanf("%d", &subOpcao);
         getchar();
-        system("cls");
+        
 
         switch (subOpcao) {
             case 1: {

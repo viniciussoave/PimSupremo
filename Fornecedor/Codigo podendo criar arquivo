@@ -361,7 +361,7 @@ void subtabela(inserir x, int arrayforne, inserir fornecedor[]) {
     cnpjvoid(x.cnpj);
     telefone(x.contato);
     printf("|%s", x.email);
-    espacagmail1(strlen(x.email), arrayforne, fornecedor, &maiorValor); // Verifique a passagem do comprimento correto
+    espacagmail1(strlen(x.email), arrayforne, fornecedor, &maiorValor); 
     cepcerto(x.cep);
     printf("|%s", x.tipo);
     espacatipo1(strlen(x.tipo), arrayforne, fornecedor, &maiorValor);

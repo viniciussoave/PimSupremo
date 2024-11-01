@@ -216,7 +216,7 @@ if(existir3){
     fgets(x.contato, sizeof(x.contato), stdin);
     x.contato[strcspn(x.contato, "\n")] = 0; 
     
-    while(strlen(x.contato)<10){
+    while(strlen(x.contato)<11){
         printf("Escreva um contato existente\n");
         printf("Fale o contato\n");
     fgets(x.contato, sizeof(x.contato), stdin);
@@ -691,7 +691,9 @@ x.id = 0;
     strcpy(x.cnpj, "");
     strcpy(x.cep, "");
 	int numero;
+
 do{
+       system("cls");
    printf("====== menu de fornecedores======\n");
 	printf("1-Cadastrar fornecedor\n");
 	printf("2-Mostrar tabela dos fornecedores\n");
@@ -699,9 +701,12 @@ do{
 	printf("5-Sair \n");
 	printf("================================\n");
 	printf("escolha a opcao\n");
+
+    
 	scanf("%d",&numero);
 getchar();
 	switch(numero) {
+
 	case 1:
 	
 	   fornecedor[arrayforne++] = cadastro(fornecedor,arrayforne);
@@ -717,7 +722,9 @@ getchar();
 		for(i=0;i<arrayforne;i++){
 			subtabela(fornecedor[i],arrayforne,fornecedor);
 		}
+        system("pause");
 		printf("\n");
+        
 		break;
 		case 3:
 		pesquisar1(arrayforne,fornecedor, x);

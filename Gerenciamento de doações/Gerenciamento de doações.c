@@ -12,7 +12,7 @@ typedef struct Doacao{
 
 void registroDoacao(FILE *arquiv) {
     Doacao doacao;
-    
+    system("cls");
     printf("Produto a ser doado: ");
     fgets(doacao.produto, sizeof(doacao.produto), stdin);
     doacao.produto[strcspn(doacao.produto, "\n")] = 0;
@@ -20,7 +20,7 @@ void registroDoacao(FILE *arquiv) {
     printf("Quantidade a ser doada: ");
     scanf("%d", &doacao.qtd);
     getchar();
-    
+
     printf("Instituição a ser Doada");
     fgets(doacao.local, sizeof(doacao.local), stdin);
     doacao.local[strcspn(doacao.local, "\n")] = 0;
@@ -31,11 +31,14 @@ void registroDoacao(FILE *arquiv) {
 
     fprintf(arquiv, "%s,%d,%s,%s\n", doacao.produto, doacao.qtd, doacao.local, doacao.data);
     printf("Doação registrada com sucesso!\n");
+    system("pause");
+    system("cls");
 }
 
 void ConsultarDoacao(FILE *arquiv) {
     Doacao doacao2;
     char linha[999];
+    system("cls");
     printf("=== Doações Registradas ===\n");
 
     while (fgets(linha, sizeof(linha), arquiv)) {
@@ -44,6 +47,8 @@ void ConsultarDoacao(FILE *arquiv) {
     }
 
     printf("=== Fim da Consulta ===\n");
+    system("pause");
+    system("cls");
 }
 
 int main() {

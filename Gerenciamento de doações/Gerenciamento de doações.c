@@ -3,15 +3,16 @@
 #include <string.h>
 #include <locale.h>
 
-typedef struct Doacao {
+typedef struct Doacao{
     char produto[50];
     int qtd;
     char data[20];
-} Doacao;
+    char local [100]
+}Doacao;
 
 void registroDoacao(FILE *arquiv) {
     Doacao doacao;
-
+    
     printf("Produto a ser doado: ");
     fgets(doacao.produto, sizeof(doacao.produto), stdin);
     doacao.produto[strcspn(doacao.produto, "\n")] = 0;
@@ -19,24 +20,27 @@ void registroDoacao(FILE *arquiv) {
     printf("Quantidade a ser doada: ");
     scanf("%d", &doacao.qtd);
     getchar();
+    
+    printf("Instituição a ser Doada");
+    fgets(doacao.local, sizeof(doacao.local), stdin);
+    doacao.local[strcspn(doacao.local, "\n")] = 0;
 
     printf("Data da doação (DD/MM/AAAA): ");
     fgets(doacao.data, sizeof(doacao.data), stdin);
     doacao.data[strcspn(doacao.data, "\n")] = 0;
 
-    fprintf(arquiv, "%s,%d,%s\n", doacao.produto, doacao.qtd, doacao.data);
+    fprintf(arquiv, "%s,%d,%s,%s\n", doacao.produto, doacao.qtd, doacao.local, doacao.data);
     printf("Doação registrada com sucesso!\n");
 }
 
 void ConsultarDoacao(FILE *arquiv) {
     Doacao doacao2;
     char linha[999];
-
     printf("=== Doações Registradas ===\n");
 
     while (fgets(linha, sizeof(linha), arquiv)) {
-        sscanf(linha, "%49[^,],%d,%19[^\n]", doacao2.produto, &doacao2.qtd, doacao2.data);
-        printf("Produto: %s\nQuantidade: %d\nData: %s\n\n", doacao2.produto, doacao2.qtd, doacao2.data);
+        sscanf(linha, "%49[^,],%d,%99[^,],%19[^\n]", doacao2.produto, &doacao2.qtd, doacao2.local, doacao2.data);
+        printf("Produto: %s\nQuantidade: %d\nInstituiçao: %s\nData: %s\n\n", doacao2.produto, doacao2.qtd, doacao2.local, doacao2.data);
     }
 
     printf("=== Fim da Consulta ===\n");
@@ -88,4 +92,3 @@ int main() {
 
     return 0;
 }
-

@@ -16,6 +16,7 @@ struct estrutura_cliente{
 };
 typedef struct estrutura_cliente DadosCliente; //defina o tipo de estrutura estrutura_cliente como DadosCliente
 
+void clrscr();
 void OpcaoInvalida();
 void CabecalhoTabela();
 void ComoPreencher();
@@ -72,7 +73,6 @@ int main(){
 	LerClientesNoArquivo(&Primeiro);
 	
 		do{
-				
 				linha();
 				printf("\t====Menu Clientes====\n");
 				printf("\n 1. Cadastrar cliente");
@@ -89,38 +89,44 @@ int main(){
 				
 					case 1://Cadastro cliente
 						RecebeCliente(&Primeiro);
-						system("pause");
-						system("cls");
+						clrscr();
 						break;
 					case 2://Pesquisar/Editar cliente
 				    	PesquisaCliente(&Primeiro);
-				    	system("pause");
-				    	system("cls");
+				    	clrscr();
 				    break;
 					case 3://listar clientes
-						system("cls");
 						ListaClientes(&Primeiro);
+						clrscr();
 					break;
 					case 4://Remove cliente
 						RemoverCliente(&Primeiro);
+						clrscr();
 					break;
 					case 5://Volta para o menu principal
-					RetornaMenuPrincipal();
+						RetornaMenuPrincipal();
+						clrscr();
 					break;
 					default:
-					OpcaoInvalida();
+						OpcaoInvalida();
+						clrscr();
 					break;	
 				}
 			}while(iOpcaoMenuClientes != 5);
-			
 			return 0;
 		}
+		
+void clrscr(){
+	linha();
+	system("pause");
+	linha();
+	system("cls");
+}
 	
 void RetornaMenuPrincipal(){
 	linha();
 	printf("Retornando ao Menu Principal");
 	linha();
-	system("pause");
 }
 
 void RetornaMenuClientes(){
@@ -270,10 +276,10 @@ void RecebeCliente(DadosCliente **Primeiro){
 	if(ArqPrincipal == NULL){
 		fprintf(stderr, "\n\nFalha ao abrir o arquivo\n\n");
 	}
+	
 	fprintf(ArqPrincipal, "%s;%s;%s\n", NovoCliente->cNome, NovoCliente->cCpf, NovoCliente->cTelefone);//escreve os dados no arquivo
-						
 	fclose(ArqPrincipal);
-	printf("\n\tCadastro realizado!\n\n");
+	printf("\n\tCadastro realizado!");
 }
 
 void PesquisaCliente(DadosCliente **Primeiro){
@@ -294,7 +300,6 @@ void PesquisaCliente(DadosCliente **Primeiro){
 			}while(!validaCPF(cCpfComparacao));
 					
 			DadosCliente *Buscar = *Primeiro;
-			int Remover;
 			// Abrindo arquivo temporário apenas uma vez em modo de sobrescrever
 			FILE *ArqSecundario;
 			ArqSecundario = fopen("Secundario.txt", "w");
@@ -303,14 +308,14 @@ void PesquisaCliente(DadosCliente **Primeiro){
 				return;
 			}
 				
-			while (Buscar != NULL){
+			while(Buscar != NULL){
 				    	
 				if (strcmp(cCpfComparacao, Buscar->cCpf) == 0){//procura o cliente na lista
 				    iEncontrou = 1; //cliente encontrado
 				    linha();
 				    printf("====Cliente encontrado====");
 				    
-				    do{
+				    
 				    linha();
 				    printf("Nome: %s", Buscar->cNome);
 				    printf("\nCPF: %s", Buscar->cCpf);
@@ -354,7 +359,7 @@ void PesquisaCliente(DadosCliente **Primeiro){
 				                printf("\nTelefone do cliente: ");
 				                fgets(Buscar->cTelefone, sizeof(Buscar->cTelefone), stdin);
 				                Buscar->cTelefone[strlen(Buscar->cTelefone)] = '\0';
-				            }while(validaTelefone(Buscar->cTelefone));
+				            }while(!validaTelefone(Buscar->cTelefone));
 				
 				            linha();
 				            printf("Informações atualizadas com sucesso!!");
@@ -363,9 +368,7 @@ void PesquisaCliente(DadosCliente **Primeiro){
 				        	linha();
 							printf("Retornando ao menu clientes!");
 							linha();
-						}		
-								
-				    }while(iOpcaoMenuBuscar != 2);			        
+						}					        
 				}    
 				fprintf(ArqSecundario, "%s;%s;%s\n", Buscar->cNome, Buscar->cCpf, Buscar->cTelefone);//Escreve no arquivo secundario (seja cliente editado ou não)							
 				Buscar = Buscar->ProxCliente;
@@ -375,7 +378,7 @@ void PesquisaCliente(DadosCliente **Primeiro){
 				remove("Principal.txt");
 				rename("Secundario.txt", "Principal.txt");
 				
-				/*if (remove("Principal.txt") != 0) {
+				if (remove("Principal.txt") != 0) {
 				    perror("Erro ao remover o arquivo Cadastro.txt");
 				} else {
 				    printf("Arquivo ArqPrincipal removido com sucesso.\n");
@@ -385,7 +388,7 @@ void PesquisaCliente(DadosCliente **Primeiro){
 				    perror("Erro ao renomear ArqSecundario.txt para Cadastro.txt");
 				} else {
 				    printf("Arquivo Secundario.txt renomeado para Cadastro.txt com sucesso.\n");
-				}*/
+				}
 				
 				//free(Buscar);    
 				if(iEncontrou != 1) {
@@ -403,7 +406,9 @@ void ListaClientes(DadosCliente **Primeiro){
 	DadosCliente *Auxiliar = *Primeiro;//define um auxiliar para percorrer a lista desde o primeiro cliente (ultimo cliente adicionado)
 					
 	if(Auxiliar == NULL){//se não tiver nenhum cliente cadastrado, não lÊ
+		linha();
 		printf("\nNenhum cliente foi encontrado !\n");
+		linha();
 	}else{
 		CabecalhoTabela();
 		while(Auxiliar != NULL){

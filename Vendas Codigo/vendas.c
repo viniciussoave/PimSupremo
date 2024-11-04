@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdio.h> //Falta fazer a parte de registrar vendas, já foi feito a parte de inserir ID do produto.
 #include <stdlib.h>
 #include <time.h>
 #include <locale.h>

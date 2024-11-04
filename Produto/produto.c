@@ -214,6 +214,7 @@ void EditarProd(){
                 rename("temp.txt", "produtos.txt");
                 system("cls");
             } else {
+                remove("temp.txt");
                 erro = 0;
             }
         }
@@ -221,6 +222,7 @@ void EditarProd(){
 }
 
 void RemoverProd(){
+            FILE *arquivo;
             int verificar = 0;
             int existe = 0;
             int pesquisaID = 0;
@@ -238,7 +240,7 @@ void RemoverProd(){
 
         switch(verificar){
             case 1:
-            FILE *arquivo;
+            
             arquivo = fopen("produtos.txt", "r");
             if (arquivo == NULL) {
             perror("Erro ao abrir o arquivo");

@@ -37,7 +37,9 @@ void RegistrarVenda(){
     char nomeProd[50]={0};
     char nomeProdLeitura[50];
     arquivoVendas = fopen("vendas.txt", "a");
+    idVenda = VerificaUltimoIdVenda()+1;
 do{
+    idValido = 0;
     printf("Registro de Venda:\n");
     printf("1. Id da venda = %d\n", idVenda); //não tem como alterar
     printf("2. Id do produto = %d\n", idProd); //Alteravel
@@ -49,6 +51,12 @@ do{
     scanf("%d",&opcReg);
 
     switch(opcReg){
+        case 1:
+        printf("Erro: Não é possivel alterar o id da venda!\n");
+        system("pause");
+        system("cls");
+        break;
+
         case 2:
         system("cls");
         printf("Id do produto = ");
@@ -70,6 +78,30 @@ do{
             system("cls");
         }
         fclose(arquivoProd);
+        break;
+
+        case 3:
+        printf("Erro: Não é possivel o nome do produto!\n");
+        system("pause");
+        system("cls");
+        break;
+
+        case 4:
+        //Fazer inserir a quantidade de produtos vendidos
+        break;
+
+        case 5:
+        //Fazer inserir a data(modificar a data que já vai ser puxada)
+        break;
+
+        case 6:
+        //Adicionar ao arquivo de vendas a venda atual
+        break;
+
+        default:
+        printf("Escolha uma opção valida!\n");
+        system("pause");
+        system("cls");
         break;
     }
     } while(opcReg != 6);

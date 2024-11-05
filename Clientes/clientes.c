@@ -39,6 +39,8 @@ void ListaClientes(DadosCliente **Primeiro);
 void RemoverCliente(DadosCliente **Primeiro);
 void Remover(DadosCliente **Primeiro, char *cpf);
 
+void atualizalista(DadosCliente **Primeiro);
+
 //validação para os dados inseridos
 int validaCPF(char *cpf);
 int validaTelefone(char *telefone);
@@ -110,8 +112,10 @@ int main(){
 					default:
 						OpcaoInvalida();
 						clrscr();
-					break;	
+					break;
+					
 				}
+				atualizalista(&Primeiro);
 			}while(iOpcaoMenuClientes != 5);
 			return 0;
 		}
@@ -239,7 +243,7 @@ void RecebeCliente(DadosCliente **Primeiro){
 	printf("\t====Adicionar Cliente===");
 	ComoPreencher();
 						
-	//coletando as informações do cliente
+	//Coletando as informações do cliente
 	do{
 		printf("\nDigite o nome do cliente: ");
 		fgets(NovoCliente->cNome, sizeof(NovoCliente->cNome), stdin);
@@ -301,12 +305,6 @@ void PesquisaCliente(DadosCliente **Primeiro){
 					
 			DadosCliente *Buscar = *Primeiro;
 			// Abrindo arquivo temporário apenas uma vez em modo de sobrescrever
-			FILE *ArqSecundario;
-			ArqSecundario = fopen("Secundario.txt", "w");
-			if (ArqSecundario == NULL) {
-				FalhaNoArquivo();
-				return;
-			}
 				
 			while(Buscar != NULL){
 				    	
@@ -370,25 +368,10 @@ void PesquisaCliente(DadosCliente **Primeiro){
 							linha();
 						}					        
 				}    
-				fprintf(ArqSecundario, "%s;%s;%s\n", Buscar->cNome, Buscar->cCpf, Buscar->cTelefone);//Escreve no arquivo secundario (seja cliente editado ou não)							
+				//Escreve no arquivo secundario (seja cliente editado ou não)							
 				Buscar = Buscar->ProxCliente;
 			}
 				// Remove o arquivo antigo e renomeia o temporário
-				fclose(ArqSecundario);
-				remove("Principal.txt");
-				rename("Secundario.txt", "Principal.txt");
-				
-				if (remove("Principal.txt") != 0) {
-				    perror("Erro ao remover o arquivo Cadastro.txt");
-				} else {
-				    printf("Arquivo ArqPrincipal removido com sucesso.\n");
-				}
-				
-				if (rename("Secundario.txt", "Principal.txt") != 0) {
-				    perror("Erro ao renomear ArqSecundario.txt para Cadastro.txt");
-				} else {
-				    printf("Arquivo Secundario.txt renomeado para Cadastro.txt com sucesso.\n");
-				}
 				
 				//free(Buscar);    
 				if(iEncontrou != 1) {
@@ -474,22 +457,6 @@ void RemoverCliente(DadosCliente **Primeiro){
 	    }
 	
 	    // Atualiza o arquivo após remoção
-	    FILE *ArqSecundario = fopen("Secundario.txt", "w");
-	    if (ArqSecundario == NULL) {
-	        FalhaNoArquivo();
-	        return;
-	    }
-	    
-	    Buscar = *Primeiro; //vai ler a lista tudo denovo só que sem o cliente removido
-	    
-		while (Buscar != NULL) {
-	        fprintf(ArqSecundario, "%s;%s;%s\n", Buscar->cNome, Buscar->cCpf, Buscar->cTelefone);
-	        Buscar = Buscar->ProxCliente;
-	    }
-	    
-	    fclose(ArqSecundario);
-	    remove("Principal.txt");
-	    rename("Secundario.txt", "Principal.txt");
 	    
 	    if (iEncontrou != 1) {
 	        linha();
@@ -522,4 +489,19 @@ void Remover(DadosCliente **Primeiro, char *cpf){
 		Anterior->ProxCliente = Atual->ProxCliente;
 	}
 	free(Atual);
+}
+
+void atualizalista(DadosCliente **Primeiro){
+	
+	DadosCliente *Buscar;
+	Buscar = *Primeiro; //vai ler a lista tudo denovo só que sem o cliente removido
+	
+	FILE *ArqPrincipal = fopen("Principal.txt", "w");
+	
+	while(Buscar != NULL) {
+	fprintf(ArqPrincipal, "%s;%s;%s\n", Buscar->cNome, Buscar->cCpf, Buscar->cTelefone);
+	Buscar = Buscar->ProxCliente;
+	}
+				    
+	fclose(ArqPrincipal);	
 }

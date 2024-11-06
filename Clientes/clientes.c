@@ -391,8 +391,7 @@ void ListaClientes(DadosCliente **Primeiro){
 
 void RemoverCliente(DadosCliente **Primeiro){
 	
-	int iOpcaoRm;
-    char cCpfComparacao[13];
+    char cCpfComparacaoRm[14];
     int iOpcaoMenuRemover;
     int iEncontrou = 0;
     DadosCliente *Buscar = *Primeiro;
@@ -414,13 +413,13 @@ void RemoverCliente(DadosCliente **Primeiro){
 		ComoPreencher();
 	    do {
 	        printf("Digite o CPF do cliente a ser removido: ");
-	        fgets(cCpfComparacao, sizeof(cCpfComparacao), stdin);
-	        cCpfComparacao[strlen(cCpfComparacao)] = '\0';
-	    }while(!validaCPF(cCpfComparacao));
+	        fgets(cCpfComparacaoRm, sizeof(cCpfComparacaoRm), stdin);
+	        cCpfComparacaoRm[strlen(cCpfComparacaoRm)] = '\0';
+	    }while(!validaCPF(cCpfComparacaoRm));
 	
 	    // Procura o cliente na lista
 	    while (Buscar != NULL) {
-	        if(strcmp(cCpfComparacao, Buscar->cCpf) == 0){// Cliente encontrado
+	        if(strcmp(cCpfComparacaoRm, Buscar->cCpf) == 0){// Cliente encontrado
 	            iEncontrou = 1;
 	            linha();
 	            printf("==== Cliente encontrado ====");
@@ -488,6 +487,6 @@ void AtualizaLista(DadosCliente **Primeiro){//a cada loop le a lista encadeada (
 	fprintf(ArqPrincipal, "%s;%s;%s\n", Buscar->cNome, Buscar->cCpf, Buscar->cTelefone);
 	Buscar = Buscar->ProxCliente;
 	}
-	
+	free(Buscar);
 	fclose(ArqPrincipal);	
 }

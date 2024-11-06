@@ -13,7 +13,7 @@ void linha() {
 
 
 typedef struct{   // variaveis dos fornecedores
-    float id;
+    int id;
 	char nome[100],contato[100],email[100],tipo[100],cnpj[100],cep[100]; 
 }inserir;
 
@@ -132,14 +132,27 @@ int existir5=0;
 int j;
 int compnome;int compcnpj;int compemail;int compcontato;
 
-    printf("Fale o numero do id\n");
-    scanf("%f", &x.id);
-    while (x.id < 0 || x.id >= 1000) {
-    printf("Escreva um id de 0 até 999\n");
-    printf("Fale o numero do id\n");
-    scanf("%f", &x.id);
-}
+    while (1) {
+        printf("Fale o numero do id\n");
+
+        if (scanf("%d", &x.id) != 1) {
+            while (getchar() != '\n'); 
+           
+        } else {
+                if (x.id >= 0 && x.id < 1000) {
+                     printf("Fale o numero do id\n");
+                     scanf("%d", &x.id);
+                break;  
+            } else {
+                printf("Escreva um id de 0 até 999\n");
+            }
+        }
+    }
+
     
+   
+     
+        
     do{for(j=0;j<arrayforne;j++){
       existir=0;
        if(fornecedor[j].id ==x.id){
@@ -150,7 +163,7 @@ int compnome;int compcnpj;int compemail;int compcontato;
     if(existir){
         printf("ID ja cadastrado\n");
         printf("Fale o numero do id(1-999)\n");
-    scanf("%f", &x.id);
+    scanf("%d", &x.id);
   
     }
     }while(existir);
@@ -212,18 +225,18 @@ if(existir3){
     x.cnpj[strcspn(x.cnpj, "\n")] = 0; 
     }}while(existir3);
 
-    printf("Fale o contato (Apenas numero(10))\n");
+    printf("Fale o contato (Apenas numero(10 ou 11))\n");
     fgets(x.contato, sizeof(x.contato), stdin);
     x.contato[strcspn(x.contato, "\n")] = 0; 
     
-    while(strlen(x.contato)<11){
+    while(strlen(x.contato)<10){
         printf("Escreva um contato existente\n");
         printf("Fale o contato\n");
     fgets(x.contato, sizeof(x.contato), stdin);
     x.contato[strcspn(x.contato, "\n")] = 0; 
     }
     
-    if(strlen(x.contato)>11){
+    if(strlen(x.contato)>12){
         x.contato[11]='\0';
     }
     
@@ -313,7 +326,7 @@ void cnpjvoid( char *cnpj){ //formatacao do cnpj
 }
 
 void telefone(char *tele){//formatacao do contato
-    char tele1[18];
+    char tele1[19];
 int i;
  for ( i = 0; i< strlen(tele); i++) {
         if (tele[i] < '0' || tele[i] > '9') {
@@ -321,14 +334,25 @@ int i;
          
         }
     }
+int fixo=strlen(tele);
 
-
-    snprintf(tele1,sizeof(tele1),"(%c%c)%c%c%c%c%c-%c%c%c%c",
-   tele[0],tele[1],
-   tele[2],tele[3],tele[4],tele[5],tele[6],
-   tele[7],tele[8],tele[9],tele[10]);
-   printf("%s",tele1);
-}
+if (fixo == 10) {
+        snprintf(tele1, sizeof(tele1), "(%c%c)%c%c%c%c-%c%c%c%c%c",
+                 tele[0], tele[1],
+                 tele[2], tele[3], tele[4], tele[5], tele[6],
+                 tele[7], tele[8], tele[9], tele[10]);
+                 printf(" ");
+    }
+    
+    else if (fixo == 11) {
+        snprintf(tele1, sizeof(tele1), "(%c%c)%c%c%c%c%c-%c%c%c%c",
+                 tele[0], tele[1],
+                 tele[2], tele[3], tele[4], tele[5], tele[6],
+                 tele[7], tele[8], tele[9], tele[10]);
+                 
+    }
+    printf("%s", tele1);
+    }
 
 
 void cepcerto( char *cep){ //formatacao cep
@@ -352,7 +376,7 @@ void subtabela(inserir x, int arrayforne, inserir fornecedor[]) {
     int maiorValor;
     int k = strlen(x.nome);
     
-    printf("|%3.f|", x.id);
+    printf("|%3.d|", x.id);
     printf("%s", x.nome);
     
     espacamento(k, arrayforne, fornecedor, &maiorValor);
@@ -417,7 +441,7 @@ void arquivosalvar(FILE *arquivo,int arrayforne,inserir fornecedor[]){
     int i;
     for(i=0;i<arrayforne;i++){
    
-        fprintf(arquivo," %0.f, ", fornecedor[i].id); 
+        fprintf(arquivo," %d, ", fornecedor[i].id); 
           fprintf(arquivo, "%s, ", fornecedor[i].nome);
      
         fprintf(arquivo,"%s, ", fornecedor[i].cnpj);
@@ -438,7 +462,7 @@ void arquivoleitura(char *arquivo, inserir fornecedor[], int *arrayforne) {
     
     
     
-     while (fscanf(file, "%f, %99[^,], %99[^,], %99[^,], %99[^,], %99[^,], %99[^\n]\n",
+     while (fscanf(file, "%d, %99[^,], %99[^,], %99[^,], %99[^,], %99[^,], %99[^\n]\n",
                   &fornecedor[*arrayforne].id,
                   fornecedor[*arrayforne].nome,
                   fornecedor[*arrayforne].cnpj,
@@ -460,7 +484,7 @@ void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
     int number2;
     int j;
     int verificar;
-      float idnovo;
+      int idnovo;
           int idExistente = 0;
           int i;
           char nomenovo[100];
@@ -473,7 +497,7 @@ void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
          char emailnovo[100];
          char cepnovo[100];
         printf("Escreva o id\n");
-     scanf("%f",&x.id);
+     scanf("%d",&x.id);
         
     do{ 
          verificar = 0; 
@@ -486,11 +510,11 @@ void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
     if(!verificar){
         printf("ID nao encontrado\n");
         printf("Fale o numero do id\n");
-    scanf("%f", &x.id);
+    scanf("%d", &x.id);
     }
     }while(!verificar);
      printf("====== Fornecedor ======\n");
-          printf("ID encontrado: %0.f\n", x.id); 
+          printf("ID encontrado: %d\n", x.id); 
           printf("Nome: %s\n", fornecedor[j].nome);
         printf("CNPJ: %s\n", fornecedor[j].cnpj);
         printf("Contato: %s\n", fornecedor[j].contato);
@@ -518,11 +542,11 @@ if(number ==1){
        case 1:
        {
                     printf("Informe o novo ID:\n");
-                    scanf("%f", &idnovo);
+                    scanf("%d", &idnovo);
                 while (idnovo< 0 || idnovo >= 1000) {
     printf("Escreva um id de 0 até 999\n");
     printf("Fale o numero do id\n");
-    scanf("%f", &idnovo);
+    scanf("%d", &idnovo);
 }
                     for (i = 0; i < arrayforne; i++) {
                         if (fornecedor[i].id == idnovo) {
@@ -533,7 +557,7 @@ if(number ==1){
 
                     if (!idExistente) {
                         fornecedor[j].id = idnovo;
-                        printf("Novo id: %.0f\n", idnovo);
+                        printf("Novo id: %.0d\n", idnovo);
                     } else {
                         printf("ID já existente\n");
                     }

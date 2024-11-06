@@ -1,16 +1,9 @@
-
-
 #include <stdio.h>
 #include <string.h>
 
-
-
-
 void linha() {
 	printf("___________\n");
-
 }
-
 
 typedef struct{   // variaveis dos fornecedores
     int id;
@@ -29,14 +22,10 @@ if (arrayforne == 0) {
         int comprimentoNome = strlen(fornecedor[j].nome);
         if (comprimentoNome > *maiorValor) {
             *maiorValor = comprimentoNome;
-        }
-    }
-
-   
+        } }
     for (int l = 0; l < (*maiorValor - k + 0); l++) {
         printf(" ");
-    }
-}
+    }     }
 
 //espacamento para a tabela
 void espacatipo(int k,int arrayforne,inserir fornecedor[],int* maiortipo){
@@ -45,19 +34,15 @@ void espacatipo(int k,int arrayforne,inserir fornecedor[],int* maiortipo){
 if (arrayforne == 0) {
         return;
     }
-    
     for (j = 0; j < arrayforne; j++) {
         int comprimentoTipo = strlen(fornecedor[j].tipo);
         if (comprimentoTipo > *maiortipo) {
             *maiortipo = comprimentoTipo;
-        }
-    }
+        }     }
 
-   
     for (int l = 4; l < (*maiortipo - k + 0); l++) {
         printf(" ");
-    }
-}
+    } }
 
 //espcamento subtabela
 void espacatipo1(int k,int arrayforne,inserir fornecedor[],int* maiortipo){
@@ -79,7 +64,6 @@ if (arrayforne == 0) {
     }
 }
 
-
 //espacamento para gmail tabela
 void espacagmail(int k,int arrayforne,inserir fornecedor[],int* maioremail){
  int j;
@@ -87,19 +71,14 @@ void espacagmail(int k,int arrayforne,inserir fornecedor[],int* maioremail){
 if (arrayforne == 0) {
         return;
     }
-    
     for (j = 0; j < arrayforne; j++) {
         int comprimentoNome = strlen(fornecedor[j].email);
         if (comprimentoNome > *maioremail) {
             *maioremail = comprimentoNome;
-        }
-    }
-
-   
+        }}
     for (int l = 5; l < (*maioremail - k + 0); l++) {
         printf(" ");
-    }
-}
+    }   }
 
 //espacamento para gmail subtabela
 void espacagmail1(int k,int arrayforne,inserir fornecedor[],int* maioremail){
@@ -123,13 +102,7 @@ if (arrayforne == 0) {
 
 inserir cadastro(inserir fornecedor[],int arrayforne) {         //cadastrar fornecedor
 inserir x;
-int existir=0;
-int existir2=0;
-int existir3=0;
-int existir4=0;
-int existir5=0;
-
-int j;
+int existir=0, existir2=0, existir3=0,  existir4=0, existir5=0,j;
 int compnome;int compcnpj;int compemail;int compcontato;
 
     while (1) {
@@ -140,19 +113,13 @@ int compnome;int compcnpj;int compemail;int compcontato;
            
         } else {
                 if (x.id >= 0 && x.id < 1000) {
-                     printf("Fale o numero do id\n");
-                     scanf("%d", &x.id);
+                
+                 
                 break;  
             } else {
-                printf("Escreva um id de 0 até 999\n");
-            }
-        }
-    }
+               
+        }   } }
 
-    
-   
-     
-        
     do{for(j=0;j<arrayforne;j++){
       existir=0;
        if(fornecedor[j].id ==x.id){
@@ -164,7 +131,10 @@ int compnome;int compcnpj;int compemail;int compcontato;
         printf("ID ja cadastrado\n");
         printf("Fale o numero do id(1-999)\n");
     scanf("%d", &x.id);
-  
+  if(x.id >= 0 && x.id < 1000){
+     printf("Fale o numero do id(1-999)\n");
+    scanf("%d", &x.id);
+  }
     }
     }while(existir);
     getchar(); 
@@ -173,7 +143,6 @@ int compnome;int compcnpj;int compemail;int compcontato;
     fgets(x.nome, sizeof(x.nome), stdin);
     x.nome[strcspn(x.nome, "\n")] = 0; 
     
-   
 do{for(j=0;j<arrayforne;j++){
     compnome = strcmp(x.nome,fornecedor[j].nome);
         existir2=0;
@@ -302,18 +271,15 @@ if(existir5){
      return x;
 }
 
-
 void cnpjvoid( char *cnpj){ //formatacao do cnpj
     char cnpjcerto[20];
     int i;
    
   for ( i = 0; i< strlen(cnpj); i++) {
         if (cnpj[i] < '0' || cnpj[i] > '9') {
-       cnpj[i]='0';
-         
+      cnpj[i]='0';
         }
     }
-    
     
     snprintf(cnpjcerto, sizeof(cnpjcerto), "%c%c.%c%c%c.%c%c%c/%c%c%c%c-%c%c",
      cnpj[0],cnpj[1],
@@ -396,20 +362,16 @@ void subtabela(inserir x, int arrayforne, inserir fornecedor[]) {
 void espacamento2(int k,int arrayforne,inserir fornecedor[],int* maiorValor){ 
  int j;
     *maiorValor = 0;
-
  
     for (j = 0; j < arrayforne; j++) {
         int comprimentoNome = strlen(fornecedor[j].nome);
         if (comprimentoNome > *maiorValor) {
             *maiorValor = comprimentoNome;
-        }
-    }
+        }   }
 
-   
     for (int l = 4; l < (*maiorValor - k + 0); l++) {
         printf(" ");
-    }
-}
+    }   }
 
 void tabela1(int arrayforne, inserir fornecedor[]) {       //Tabela principal
 int l;
@@ -434,8 +396,6 @@ printf("|NOME");
 printf("|");
 }
 
-
-
 //Salvar os arquivos
 void arquivosalvar(FILE *arquivo,int arrayforne,inserir fornecedor[]){
     int i;
@@ -451,16 +411,11 @@ void arquivosalvar(FILE *arquivo,int arrayforne,inserir fornecedor[]){
         fprintf(arquivo," %s ", fornecedor[i].tipo);
         fprintf(arquivo,"\n");
         
-    }
-    
-   
-}
+    }  }
 
 //ler o arquivo
 void arquivoleitura(char *arquivo, inserir fornecedor[], int *arrayforne) {
     FILE *file = fopen(arquivo, "r");
-    
-    
     
      while (fscanf(file, "%d, %99[^,], %99[^,], %99[^,], %99[^,], %99[^,], %99[^\n]\n",
                   &fornecedor[*arrayforne].id,
@@ -472,11 +427,6 @@ void arquivoleitura(char *arquivo, inserir fornecedor[], int *arrayforne) {
                   fornecedor[*arrayforne].tipo) == 7) {
         (*arrayforne)++;
     }
-    
-    
-    
-    
-    
 }
 // pesquisar 3 opção
 void pesquisar1(int arrayforne,inserir fornecedor[],inserir x){
@@ -705,7 +655,6 @@ if(number ==1){
 
 }
 
-
 int main()
 
 { 
@@ -715,9 +664,6 @@ if (arquivo == NULL) {
         perror("Arquivo nao abriu");
         return 1;
     }
-
-
-
      inserir fornecedor[100]; 
     inserir x;
     int arrayprod=0,arrayforne=0;
@@ -741,8 +687,6 @@ do{
 	printf("5-Sair \n");
 	printf("================================\n");
 	printf("escolha a opcao\n");
-
-    
 	scanf("%d",&numero);
 getchar();
 	switch(numero) {
@@ -755,20 +699,16 @@ getchar();
 	         
 	break;
 	case 2:
-		
 		 tabela1(arrayforne, fornecedor);
-		
 		printf("\n");
 		for(i=0;i<arrayforne;i++){
 			subtabela(fornecedor[i],arrayforne,fornecedor);
 		}
         system("pause");
 		printf("\n");
-        
 		break;
 		case 3:
 		pesquisar1(arrayforne,fornecedor, x);
-
 
 		break;
 }

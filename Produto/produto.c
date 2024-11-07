@@ -9,7 +9,7 @@ typedef struct {
     float precoUnidade;
     float desconto;
     float valorFinal;
-    char nomeProduto[100];
+    char nomeProduto[50];
 } produto;
 
 int verificarID(produto Prod[], int indice, int id) {

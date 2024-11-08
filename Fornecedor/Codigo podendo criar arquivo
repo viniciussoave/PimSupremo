@@ -666,7 +666,7 @@ if (arquivo == NULL) {
     }
      inserir fornecedor[100]; 
     inserir x;
-    int arrayprod=0,arrayforne=0;
+    int arrayforne=0;
     int i,j;
         arquivoleitura("Fornecedor.txt", fornecedor, &arrayforne);
 x.id = 0;

@@ -205,13 +205,16 @@ do{
         fprintf(arquivoVendas, ",");
         fprintf(arquivoVendas,"%02d,%02d,%02d", dia,mes,ano);
         fprintf(arquivoVendas, "\n");
-        printf("Registro de venda criado com sucesso!");
+        printf("Registro de venda criado com sucesso!\n");
         system("pause");
         system("cls");
 
         fclose(arquivoVendas);
 
         //Adicionar ao arquivo de vendas a venda atual
+        break;
+
+        case 7:
         break;
 
         default:
@@ -254,7 +257,8 @@ int main(){
     printf("=== Menu de Vendas ===\n");
     printf("1. Consultar vendas\n");
     printf("2. Registrar vendas\n");
-    printf("3. Voltar ao Menu Principal\n");
+    printf("3. Remover venda\n");
+    printf("4. Voltar ao Menu Principal\n");
     printf("======================\n");
     printf("Escolha uma opção: ");
     scanf("%d", &subOpcao);

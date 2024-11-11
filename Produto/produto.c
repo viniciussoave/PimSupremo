@@ -25,8 +25,8 @@ int verificarID(produto Prod[], int indice, int id) {
 float stringParaFloat(char *str) {
 	int i;
     for (i = 0; str[i] != '\0'; i++) {
-        if (str[i] == ',') {
-            str[i] = '.';
+        if (str[i] == '.') {
+            str[i] = ',';
         }
     }
     return atof(str);
@@ -35,7 +35,7 @@ float stringParaFloat(char *str) {
 int ConsultaIDrep(int idConsulta) {
     char linha[999];
     int x;
-    int Ids[999]; //armazena os ids que serão lidos
+    int Ids[999]; //armazena os ids que serao lidos
     int indice = 0;
     FILE *produtos;
     produtos = fopen("produtos.txt","r");
@@ -79,8 +79,8 @@ void ConsultaProd(){
         sscanf(linha, "%d,%49[^,],%d,%f,%f,%f", &id, nome, &qtd, &precoPorUnidade, &desconto, &precoFinal); //essa bomba lê a linha e organiza cada valor em sua devida variavel.
 
    
-        printf("ID: %d, Nome: %s, Quantidade: %d, Preço por unidade: R$%.2f, Desconto: %.2f, Preço Final: %.2f\n",
-               id, nome, qtd, precoPorUnidade, desconto, precoFinal); //essa bomba mostra os valores.
+        printf("ID: %d, Nome: %s, Preco por unidade: R$%.2f, Desconto: %.2f%%, Preco Final: R$%.2f\n",
+               id, nome, precoPorUnidade, desconto, precoFinal); //essa bomba mostra os valores.
     }
 
 
@@ -88,6 +88,7 @@ void ConsultaProd(){
 }
 
 void EditarProd(){
+            int mudar=0;
             int erro=0;
             int existe = 0;
             int opc = 0;
@@ -124,7 +125,7 @@ void EditarProd(){
                     existe = 1;
                     printf("1. ID = %d\n", id);
                     printf("2. Nome = %s\n", nome);
-                    printf("3. Preço por unidade = %.2f\n", precoPorUnidade);
+                    printf("3. Preco por unidade = %.2f\n", precoPorUnidade);
                     printf("4. Desconto = %.2f\n",desconto);
                     printf("5. Alterar produto\n");
                     printf("6. Cancelar");
@@ -134,7 +135,7 @@ void EditarProd(){
                     switch(opc){
                         case 1:
                             system("cls");
-                            printf("Aviso: Não é possivel editar o ID.\n");
+                            printf("Aviso: Nao é possivel editar o ID.\n");
                             system("pause");
                             system("cls");
                             break;
@@ -148,7 +149,7 @@ void EditarProd(){
                         case 3:
                             system("cls");
                             char precoStr[20];
-                            printf("Preço por unidade = ");
+                            printf("Preco por unidade = ");
                             fgets(precoStr, sizeof(precoStr), stdin);
                             precoPorUnidade = stringParaFloat(precoStr);
                             system("cls");
@@ -164,7 +165,7 @@ void EditarProd(){
                         case 5:
                             if (strlen(nome) == 0) {
                                 erro = 1;
-                                printf("Erro: Nome do produto não pode estar vazio.\n");
+                                printf("Erro: Nome do produto nao pode estar vazio.\n");
                                 system("pause");
                                 system("cls");
                                 break;
@@ -172,7 +173,7 @@ void EditarProd(){
         
                             if(precoPorUnidade<0){
                                 erro = 1;
-                                printf("Erro: O preço tem que ser positivo.\n");
+                                printf("Erro: O preco tem que ser positivo.\n");
                                 system("pause");
                                 system("cls");
                                 break;
@@ -186,6 +187,7 @@ void EditarProd(){
                                 break;
                             }
 
+                            mudar = 1;
                             FILE *arquiv;
                             arquiv = fopen("temp.txt", "a");
                             precoFinal = precoPorUnidade * (1 - (desconto / 100));
@@ -205,20 +207,21 @@ void EditarProd(){
 
         if(existe == 0){
             remove("temp.txt");
-            printf("Produto não encontrado.\n");
+            printf("Produto nao encontrado.\n");
             system("pause");
             system("cls");
         } else {
-            if(erro == 0){
+            if(erro == 0 && mudar == 1){
                 remove("produtos.txt");
                 rename("temp.txt", "produtos.txt");
                 system("cls");
             } else {
                 remove("temp.txt");
+                system("cls");
                 erro = 0;
             }
         }
-
+        
 }
 
 void RemoverProd(){
@@ -234,7 +237,7 @@ void RemoverProd(){
             scanf("%d", &pesquisaID);
             getchar();
 
-            printf("Tem certeza que quer excluir o produto com o id %d? (1- Sim,2- Não)\n", pesquisaID);
+            printf("Tem certeza que quer excluir o produto com o id %d? (1- Sim,2- Nao)\n", pesquisaID);
             scanf("%d", &verificar);
             getchar();
 
@@ -265,7 +268,7 @@ void RemoverProd(){
 
                 if(existe == 0){
                     remove("temp.txt");
-                    printf("Produto não encontrado.\n");
+                    printf("Produto nao encontrado.\n");
                     system("pause");
                     system("cls");
             } else {
@@ -281,7 +284,7 @@ void RemoverProd(){
             case 2:
             break;
             default:
-                printf("Escolha uma opção valida");
+                printf("Escolha uma opcao valida");
                 system("pause");
                 system("cls");
         }
@@ -305,7 +308,7 @@ int main() {
         printf("4. Excluir Produtos\n");
         printf("5. Voltar ao Menu Principal\n");
         printf("======================\n");
-        printf("Escolha uma opção: ");
+        printf("Escolha uma opcao: ");
         scanf("%d", &subOpcao);
         getchar();
         system("cls");
@@ -317,10 +320,10 @@ int main() {
                     printf("Cadastro de produtos:\n");
                     printf("1. Id = %d \n", temp.id);
                     printf("2. Nome = %s \n", temp.nomeProduto);
-                    printf("3. Preço por unidade: %.2f \n", temp.precoUnidade);
-                    printf("4. Desconto: %.2f%% \n", temp.desconto);
+                    printf("3. Preco por unidade = R$%.2f \n", temp.precoUnidade);
+                    printf("4. Desconto = %.2f%% \n", temp.desconto);
                     printf("\n");
-                    printf("Valor Final por unidade: %.2f \n", temp.valorFinal);
+                    printf("Valor Final por unidade: R$%.2f \n", temp.valorFinal);
                     printf("5. Criar produto\n");
                     printf("6. Cancelar\n");
                     printf("Escolha um dos valores para editar ou criar o produto: \n");
@@ -345,7 +348,7 @@ int main() {
                         case 3:
                             system("cls");
                             char precoStr[20];
-                            printf("Preço por unidade = ");
+                            printf("Preco por unidade = ");
                             fgets(precoStr, sizeof(precoStr), stdin);
                             temp.precoUnidade = stringParaFloat(precoStr);
                             system("cls");
@@ -370,7 +373,7 @@ int main() {
                             }
 
                             if (strlen(temp.nomeProduto) == 0) {
-                                printf("Erro: Nome do produto não pode estar vazio.\n");
+                                printf("Erro: Nome do produto nao pode estar vazio.\n");
                                 memset(&temp, 0, sizeof(temp));
                                 system("pause");
                                 system("cls");
@@ -384,7 +387,7 @@ int main() {
                             produto = fopen("produtos.txt", "a");
 
                             if (produto == NULL){
-                                printf("Não foi possivel criar/editar o arquivo.");
+                                printf("Nao foi possivel criar/editar o arquivo.");
                                 return 1;
                             }
 
@@ -397,7 +400,7 @@ int main() {
                             }
 
                             if(temp.precoUnidade<0){
-                                printf("Erro: O preço não pode ser negativo.\n");
+                                printf("Erro: O preco nao pode ser negativo.\n");
                                 memset(&temp, 0, sizeof(temp));
                                 system("pause");
                                 system("cls");
@@ -405,7 +408,7 @@ int main() {
                             }
 
                             if(temp.desconto>100){
-                                printf("Erro: O desconto não pode ser acima de 100%.\n");
+                                printf("Erro: O desconto nao pode ser acima de 100%.\n");
                                 memset(&temp, 0, sizeof(temp));
                                 system("pause");
                                 system("cls");
@@ -413,7 +416,7 @@ int main() {
                             }
 
                             if(temp.desconto<0){
-                                printf("Erro: O desconto não pode ser negativo.\n");
+                                printf("Erro: O desconto nao pode ser negativo.\n");
                                 memset(&temp, 0, sizeof(temp));
                                 system("pause");
                                 system("cls");
@@ -448,7 +451,7 @@ int main() {
                              system("cls");
                              break;                        
                         default:
-                             printf("Escolha uma opção válida.\n");
+                             printf("Escolha uma opcao válida.\n");
                              memset(&temp, 0, sizeof(temp));
                              break;
                     }
@@ -465,7 +468,7 @@ int main() {
 
             case 3:
                 EditarProd();
-                // Implementar edição de produtos aqui
+                // Implementar edicao de produtos aqui
                 break;
 
             case 4:
@@ -477,7 +480,7 @@ int main() {
                 break;
 
             default:
-                printf("Escolha uma opção válida.\n");
+                printf("Escolha uma opcao válida.\n");
                 memset(&temp, 0, sizeof(temp)); 
                 break;
         }

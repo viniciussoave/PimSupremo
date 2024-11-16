@@ -23,7 +23,7 @@ void ComoPreencher();
 void RetornaMenuPrincipal();
 void FalhaNoArquivo();
 
-//Procedimento para ler o arquivo no comeÃ§o e atualizar a lista!
+//Procedimento para ler o arquivo no começo e atualizar a lista -> pega o que ta no arquivo e coloca no programa
 void LerClientesNoArquivo(DadosCliente **Primeiro);
 
 //Procedimento de Cadastro do cliente!
@@ -42,7 +42,7 @@ void Remover(DadosCliente **Primeiro, char *cpf);
 //Procediemento para ler a lista atualizada e escrever no arquivo
 void AtualizaLista(DadosCliente **Primeiro);
 
-//validaÃ§Ã£o para os dados inseridos pelo usuÃ¡rio
+//validação para os dados inseridos pelo usuário
 int validaCPF(char *cpf);
 int validaTelefone(char *telefone);
 int validaNome(char *nome);
@@ -53,22 +53,23 @@ int main(){
 	setlocale(LC_ALL, "");
 	
 	FILE *ArqPrincipal;
-	ArqPrincipal = fopen("Principal.txt", "r");
+	ArqPrincipal = fopen("Lista_Clientes.txt", "r");
 	if(ArqPrincipal == NULL){
 		fprintf(stderr, "Erro ao abrir arquivo!");
+		return 1;
 	}
 	fclose(ArqPrincipal);
 	
 	//Primeiro: ponteiro que vai apontar para o primeiro da lista	
 	DadosCliente *Primeiro = NULL;
 	
-	//NovoCliente: quem vai receber as informaÃ§Ãµes do usuÃ¡rio
+	//NovoCliente: quem vai receber as informações do usuário
 	DadosCliente *NovoCliente;
 	
 	//opcao dos menus e submenus
 	int iOpcaoMenuClientes;
 	
-	//funÃ§Ã£o que vai atualizar a lista de cliente lendo o arquivo ao iniciar o programa
+	//função que vai atualizar a lista de cliente lendo o arquivo ao iniciar o programa
 	LerClientesNoArquivo(&Primeiro);
 	
 		do{
@@ -80,7 +81,7 @@ int main(){
 				printf("\n 4. Remover cliente");
 				printf("\n 5. Voltar ao Menu Principal");
 				linha();
-				printf("\tEscolha uma opçãoo: ");
+				printf("\tEscolha uma opção: ");
 				scanf("%d", &iOpcaoMenuClientes);
 	        	while(getchar()!='\n');
 		
@@ -151,7 +152,7 @@ void ComoPreencher(){
 	printf("====== Formato para Preenchimento ======");
 	printf("\n- Nome: Máximo de 40 caracteres.\n");
 	printf("- CPF : Utilize o formato: xxxxxxxxxxx/xx -> 9 números / 2 números\n");
-	printf("- Telefone: Utilize o formato: (DDD)xxxxx-xxxx");
+	printf("- Telefone: Utilize o formato: (DDD)xxxxx-xxxx -> (2 números) 5 números - 4 números");
 	linha();
 }
 
@@ -171,14 +172,24 @@ int validaNome(char *nome){
 }
 
 int validaCPF(char *cpf){
-	if((cpf[9] == '/') && (strlen(cpf) != 0) && (strlen(cpf) == 12)){
-		return 1;
-	}else{
-		return 0;
-	}
+	int i;
+	//Verifica o tamanho do cpf digitado e se tem /
+    if(strlen(cpf) != 12 || cpf[9] != '/')
+        return 0;
+    //Verificar se os 9 primeiros são números (antes do /)
+    for(i = 0; i < 9; i++){
+        if(cpf[i] < '0' || cpf[i] > '9')
+            return 0;
+    }
+    // Verificar depois do / são números
+    for(i = 10; i < 12; i++){
+        if(cpf[i] < '0' || cpf[i] > '9')
+            return 0;
+    }
+    return 1; // CPF inserido corretamente
 }
 
-int CpfExistente(char *cpf, DadosCliente *Primeiro){//somente ponteiro pois eu sÃ³ vou precisar dos dados do cliente que o primeiro aponta
+int CpfExistente(char *cpf, DadosCliente *Primeiro){//somente ponteiro pois eu são vou precisar dos dados do cliente que o primeiro aponta
 
 	DadosCliente *BuscaCPF = Primeiro;
 	
@@ -190,18 +201,39 @@ int CpfExistente(char *cpf, DadosCliente *Primeiro){//somente ponteiro pois eu s
 			BuscaCPF = BuscaCPF->ProxCliente;
 		}
 	}
-	return 0; //quando nÃ£o tem cpf igual 
+	return 0; //quando não tem cpf igual 
 }
 
 int validaTelefone(char *telefone){
-	return ((telefone[0] == '(') && (telefone[3] == ')') && (telefone[9] == '-') && (strlen(telefone) == 14) && (strlen(telefone) != 0));
+	int i;
+	// ve o tamanho do telefone digitado e se possui os separadores corretos
+    if (strlen(telefone) != 14 || telefone[0] != '(' || telefone[3] != ')' || telefone[9] != '-')
+        return 0;
+
+    //ve se o ddd é número
+    if (telefone[1] < '0' || telefone[1] > '9' || telefone[2] < '0' || telefone[2] > '9')
+        return 0;
+
+    //ve se os 5 primeiros digitos são números
+    for (i = 4; i < 9; i++) {
+        if (telefone[i] < '0' || telefone[i] > '9')
+            return 0;
+    }
+
+    // verifica se os quatro ultimos (depois do -) são números
+    for (i = 10; i < 14; i++) {
+        if (telefone[i] < '0' || telefone[i] > '9')
+            return 0;
+    }
+
+    return 1; // Telefone inserido corretamente
 }
 
 //**Primeiro = conteúdo do primeiro nó da lista (cpf, nome, telefone)     *Primeiro = É o ponteiro simples, o qual aponta par um endereço de memória!
-void LerClientesNoArquivo(DadosCliente **Primeiro){ //o ponteiro de ponteiro vai mudar diretamente o valor do ponteiro que foi passado a funÃ§Ã£o // ponteiro de ponteiro pois eu vou precisar acessar o endereÃ§o que o primeiro aponta
+void LerClientesNoArquivo(DadosCliente **Primeiro){ //o ponteiro de ponteiro vai mudar diretamente o valor do ponteiro que foi passado a função // ponteiro de ponteiro pois eu vou precisar acessar o endereço que o primeiro aponta
 	
     FILE *ArqPrincipal;
-	ArqPrincipal = fopen("Principal.txt", "r");
+	ArqPrincipal = fopen("Lista_Clientes.txt", "r");
     if (ArqPrincipal == NULL) {
         FalhaNoArquivo();
     }
@@ -216,10 +248,10 @@ void LerClientesNoArquivo(DadosCliente **Primeiro){ //o ponteiro de ponteiro vai
         //Vai ler o nome, CPF e telefone do cliente no arquivo e atribuir para NovoCliente
         if(fscanf(ArqPrincipal, "%80[^;];%13[^;];%14[^\n]\n", NovoCliente->cNome, NovoCliente->cCpf, NovoCliente->cTelefone) == 3){
             NovoCliente->ProxCliente = NULL;
-	        if (Primeiro == NULL) { // Se a lista estÃ¡ vazia
+	        if(Primeiro == NULL) { // Se a lista estão vazia
 	    		NovoCliente->ProxCliente = NULL;
-	    		*Primeiro = NovoCliente;//Primeiro aponta para o novo nÃ³
-			}else{//se jÃ¡ existe cliente na lista
+	    		*Primeiro = NovoCliente;//Primeiro aponta para o novo não
+			}else{//se já existe cliente na lista
 				NovoCliente->ProxCliente = *Primeiro;//NovoCliente aponta para o primeiro da lista (para o cliente que o ponteiro primeiro aponta)
 	    		*Primeiro = NovoCliente;//ponteiro primeiro aponta para o cliente que acabou de ser adicionado
 			}	
@@ -243,7 +275,7 @@ void RecebeCliente(DadosCliente **Primeiro){
 	do{
 		printf("\nDigite o nome do cliente: ");
 		fgets(NovoCliente->cNome, sizeof(NovoCliente->cNome), stdin);
-		NovoCliente->cNome[strlen(NovoCliente->cNome)-1] = '\0'; //substitui o \n capturado pelo fgets por um terminador \0 para nÃ£o dar ruim na tabela
+		NovoCliente->cNome[strlen(NovoCliente->cNome)-1] = '\0'; //substitui o \n por um terminador \0
 		fflush(stdin);
 	}while(!validaNome(NovoCliente->cNome));
 	do{
@@ -259,7 +291,7 @@ void RecebeCliente(DadosCliente **Primeiro){
 		}
 	}while((validaCPF(NovoCliente->cCpf) == 0) || !(CpfExistente(NovoCliente->cCpf, *Primeiro) == 0));
 	do{
-		printf("\nDigite o nÃºmero de telefone do cliente: ");
+		printf("\nDigite o número de telefone do cliente: ");
 		fgets(NovoCliente->cTelefone, sizeof(NovoCliente->cTelefone), stdin);
 		NovoCliente->cTelefone[strlen(NovoCliente->cTelefone)-1] = '\0';
 		fflush(stdin);
@@ -268,17 +300,17 @@ void RecebeCliente(DadosCliente **Primeiro){
 		}
 	}while(!validaTelefone(NovoCliente->cTelefone));									
 	
-	if (Primeiro == NULL) {//Se a lista estÃ¡ vazia entre nesse primeiro if
+	if (Primeiro == NULL) {//Se a lista está vazia entre nesse primeiro if
     	NovoCliente->ProxCliente = NULL;
-    	*Primeiro = NovoCliente;//Primeiro aponta para o novo nÃ³
-	}else{//se jÃ¡ existe cliente na lista
+    	*Primeiro = NovoCliente;//Primeiro aponta para o novo nó
+	}else{//se já existe cliente na lista
 		NovoCliente->ProxCliente = *Primeiro;//NovoCliente aponta para o primeiro da lista (para o cliente que o ponteiro primeiro aponta)
     	*Primeiro = NovoCliente;//ponteiro primeiro aponta para o cliente que acabou de ser adicionado
 	}
 						
 	//Abrindo o arquivo para inserir o cliente novo
 	FILE *ArqPrincipal;
-	ArqPrincipal = fopen("Principal.txt", "a");
+	ArqPrincipal = fopen("Lista_Clientes.txt", "a");
 	
 	if(ArqPrincipal == NULL){
 		fprintf(stderr, "\n\nFalha ao abrir o arquivo\n\n");
@@ -298,13 +330,16 @@ void PesquisaCliente(DadosCliente **Primeiro){
 	linha();
 	printf("\t====Pesquisar Cliente====");
 	printf("\n*Para preencher o CPF utilize o formato abaixo...*");
-	printf("\nCPF : Utilize o formato: xxxxxxxxxxx/xx");
+	printf("\nCPF : Utilize o formato: xxxxxxxxxxx/xx -> 9 números / 2 números");
 	linha();
 		do {
 			printf("Digite o CPF do cliente: ");
 			fgets(cCpfComparacao, sizeof(cCpfComparacao), stdin);
 			cCpfComparacao[strlen(cCpfComparacao)-1] = '\0';
-			}while(!validaCPF(cCpfComparacao));
+			if((validaCPF(cCpfComparacao) == 0)){
+				printf("\n\t*Atenção: o CPF digitado não está seguindo o formato especificado\n");
+			}
+		}while(!validaCPF(cCpfComparacao));
 					
 			DadosCliente *Buscar = *Primeiro;
 			
@@ -321,10 +356,10 @@ void PesquisaCliente(DadosCliente **Primeiro){
 				    printf("\nCPF: %s", Buscar->cCpf);
 				    printf("\nTelefone: %s", Buscar->cTelefone);
 				    linha();
-				    printf("\n1. Editar InformaÃ§Ãµes.\n");
+				    printf("\n1. Editar Informações.\n");
 				    printf("\n2. Voltar ao menu clientes.\n");
 				    linha();
-				    printf("Escolha uma opÃ§Ã£o: ");
+				    printf("Escolha uma opção: ");
 				    scanf("%d", &iOpcaoMenuBuscar);
 				    while(getchar() != '\n');
 				    system("cls");
@@ -333,7 +368,7 @@ void PesquisaCliente(DadosCliente **Primeiro){
 				        if(iOpcaoMenuBuscar == 1){
 				                
 							linha();
-				            printf("\t===Editar InformaÃ§Ãµes===");
+				            printf("\t===Editar Informações===");
 				            printf("\nNome: %s", Buscar->cNome);
 				    		printf("\nCPF: %s", Buscar->cCpf);
 				    		printf("\nTelefone: %s", Buscar->cTelefone);
@@ -352,6 +387,9 @@ void PesquisaCliente(DadosCliente **Primeiro){
 				                printf("\nCPF do cliente: ");
 				                fgets(Buscar->cCpf, sizeof(Buscar->cCpf), stdin);
 				                Buscar->cCpf[strlen(Buscar->cCpf)-1] = '\0';
+				                if((validaCPF(Buscar->cCpf) == 0)){
+									printf("\n\t*Atenção: o CPF digitado não está seguindo o formato especificado\n");
+								}
 				            }while(!validaCPF(Buscar->cCpf));
 				
 				            do{
@@ -359,10 +397,13 @@ void PesquisaCliente(DadosCliente **Primeiro){
 				                printf("\nTelefone do cliente: ");
 				                fgets(Buscar->cTelefone, sizeof(Buscar->cTelefone), stdin);
 				                Buscar->cTelefone[strlen(Buscar->cTelefone)-1] = '\0';
+				                if(!validaTelefone(Buscar->cTelefone)){
+									printf("\n\t*Atenção: o telefone digitado não está seguindo o formato especificado\n");
+								}
 				            }while(!validaTelefone(Buscar->cTelefone));
 				
 				            linha();
-				            printf("InformaÃ§Ãµes atualizadas com sucesso!!");
+				            printf("Informações atualizadas com sucesso!!");
 				            linha();
 				        }else{
 				        	linha();
@@ -389,7 +430,7 @@ void ListaClientes(DadosCliente **Primeiro){
 					
 	DadosCliente *Auxiliar = *Primeiro;//define um auxiliar para percorrer a lista desde o primeiro cliente (ultimo cliente adicionado)
 					
-	if(Auxiliar == NULL){//se nÃ£o tiver nenhum cliente cadastrado, nÃ£o lÃŠ
+	if(Auxiliar == NULL){//se não tiver nenhum cliente cadastrado, não lê
 		linha();
 		printf("\nNenhum cliente foi encontrado !\n");
 		linha();
@@ -413,7 +454,7 @@ void RemoverCliente(DadosCliente **Primeiro){
 	do{
 	linha();
 	printf("Você realmente deseja remover um cliente do sistema?");
-	printf("\n\t   [S] -- SIM\n\t   [N] -- NÃƒO");
+	printf("\n\t   [S] -- SIM\n\t   [N] -- NÃO");
 	linha();
 	printf("Digite a sua resposta aqui: ");
 	scanf("%c", &cOpcaoRm);
@@ -429,6 +470,9 @@ void RemoverCliente(DadosCliente **Primeiro){
 	        printf("Digite o CPF do cliente a ser removido: ");
 	        fgets(cCpfComparacaoRm, sizeof(cCpfComparacaoRm), stdin);
 	        cCpfComparacaoRm[strlen(cCpfComparacaoRm)-1] = '\0';
+	        if((validaCPF(cCpfComparacaoRm) == 0)){
+				printf("\n\t*Atenção: o CPF digitado não está seguindo o formato especificado\n");
+			}
 	    }while(!validaCPF(cCpfComparacaoRm));
 	
 	    // Procura o cliente na lista
@@ -444,7 +488,7 @@ void RemoverCliente(DadosCliente **Primeiro){
 	            printf("\n1. Remover Cliente.\n");
 	            printf("\n2. Voltar ao menu.\n");
 	            linha();
-	            printf("Escolha uma opÃ§Ã£o: ");
+	            printf("Escolha uma opção: ");
 	            scanf("%d", &iOpcaoMenuRemover);
 	            while(getchar() != '\n');
 	
@@ -487,20 +531,19 @@ void Remover(DadosCliente **Primeiro, char *cpf){
 	}else{
 		Anterior->ProxCliente = Atual->ProxCliente;
 	}
-	free(Atual);
 }
 
-void AtualizaLista(DadosCliente **Primeiro){//a cada loop le a lista encadeada (editada ou nÃ£o) e sobrescreve no arquivo Principal 
+void AtualizaLista(DadosCliente **Primeiro){//a cada loop le a lista encadeada (editada ou não) e sobrescreve no arquivo Principal 
 	
 	DadosCliente *Buscar;
 	Buscar = *Primeiro; //vai ler a lista tudo denovo sÃ³ que sem o cliente removido
 	
-	FILE *ArqPrincipal = fopen("Principal.txt", "w");//sobreescreve o arquivo
+	FILE *ArqPrincipal = NULL;
+	ArqPrincipal = fopen("Lista_Clientes.txt", "w");//sobreescreve o arquivo
 	
 	while(Buscar != NULL) {
 	fprintf(ArqPrincipal, "%s;%s;%s\n", Buscar->cNome, Buscar->cCpf, Buscar->cTelefone);
 	Buscar = Buscar->ProxCliente;
 	}
-	free(Buscar);
 	fclose(ArqPrincipal);	
 }

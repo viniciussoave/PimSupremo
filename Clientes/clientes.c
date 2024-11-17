@@ -55,10 +55,12 @@ int main(){
 	FILE *ArqPrincipal;
 	ArqPrincipal = fopen("Lista_Clientes.txt", "r");
 	if(ArqPrincipal == NULL){
-		fprintf(stderr, "Erro ao abrir arquivo!");
+		printf("\n\nErro ao abrir arquivo!");
 		return 1;
 	}
 	fclose(ArqPrincipal);
+	
+	
 	
 	//Primeiro: ponteiro que vai apontar para o primeiro da lista	
 	DadosCliente *Primeiro = NULL;
@@ -235,7 +237,7 @@ void LerClientesNoArquivo(DadosCliente **Primeiro){ //o ponteiro de ponteiro vai
     FILE *ArqPrincipal;
 	ArqPrincipal = fopen("Lista_Clientes.txt", "r");
     if (ArqPrincipal == NULL) {
-        FalhaNoArquivo();
+        printf("\n\nErro ao abrir arquivo!");
     }
 	
 	*Primeiro = NULL;//definindo a lista como vazia
@@ -313,7 +315,7 @@ void RecebeCliente(DadosCliente **Primeiro){
 	ArqPrincipal = fopen("Lista_Clientes.txt", "a");
 	
 	if(ArqPrincipal == NULL){
-		fprintf(stderr, "\n\nFalha ao abrir o arquivo\n\n");
+		printf("\n\nErro ao abrir arquivo!");
 	}
 	
 	fprintf(ArqPrincipal, "%s;%s;%s\n", NovoCliente->cNome, NovoCliente->cCpf, NovoCliente->cTelefone);//escreve os dados no arquivo
@@ -441,7 +443,6 @@ void ListaClientes(DadosCliente **Primeiro){
 			Auxiliar = Auxiliar->ProxCliente;
 		}
 	}
-	free(Auxiliar);
 }
 
 void RemoverCliente(DadosCliente **Primeiro){

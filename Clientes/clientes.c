@@ -10,7 +10,7 @@ void linha(){
 struct estrutura_cliente{
 	char cNome[81];
 	char cCpf[14];
-	char cTelefone[16]; // 15 caracteres + 1 teminador
+	char cTelefone[16];
 	struct estrutura_cliente *ProxCliente;
 };
 typedef struct estrutura_cliente DadosCliente; //defina o tipo de estrutura estrutura_cliente como DadosCliente

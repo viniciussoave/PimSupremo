@@ -12,9 +12,6 @@ typedef struct {
 } venda;   // feito pra representa a venda (vinicius)
 
 
-void carregarArquivoVendas();
-float calculoDeReceita();
-
 int main() {
     #define maximoDeVendas 10000
 venda vendas[maximoDeVendas];

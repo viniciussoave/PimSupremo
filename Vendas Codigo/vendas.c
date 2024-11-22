@@ -38,23 +38,30 @@ int VerificaUltimoIdVenda(){ //função criada para ser feito o auto-incremento 
 }
 
 void RegistrarVenda(){
+    int mudar=0;
     int temp=0;
+    int erro=0;
     int qntVendidaTemp=0;
     int qntRestante=0;
     int qntRestanteTemp=0;
     float precoProd=0;
     float precoProdTemp = 0;
     FILE *arquivoVendas;
+    FILE *tempVendas;
     time_t agora;
     int opcReg = 0;
     char linha[999];
     int diaAtual=0,mesAtual=0,AnoAtual=0;
-    int dia=0,mes=0,ano=0,idVenda=0,idProd=0,idProdTemp=0,idProdLeitura=0,qntVendida=1;
+    int dia=0,mes=0,ano=0,idVenda=0,idProd=0,idProdTemp=0,idProdLeitura=0,qntVendida=0;
     int diaTemp=0,mesTemp=0,anoTemp=0;
     float precoTotal=0;
     int idValido=0;
     char nomeProd[50]={0};
     char nomeProdLeitura[50];
+    int id,qtd;
+    char nome[50];
+    float precoPorUnidade,desconto,precoFinal;
+
     idVenda = VerificaUltimoIdVenda()+1;
 
     time(&agora);
@@ -87,6 +94,7 @@ do{
 
     switch(opcReg){
         case 1:
+        system("cls");
         printf("Erro: Não é possivel alterar o id da venda!\n");
         system("pause");
         system("cls");
@@ -119,6 +127,7 @@ do{
         break;
 
         case 3:
+        system("cls");
         printf("Erro: Não é possivel o nome do produto!\n");
         system("pause");
         system("cls");
@@ -132,13 +141,13 @@ do{
         system("cls");
         if(qntVendidaTemp<=0){
             system("cls");
-            printf("Erro: A quantidade tem que ser acima de 0");
+            printf("Erro: A quantidade tem que ser acima de zero\n");
             system("pause");
             system("cls");
         } else {
             if(qntVendidaTemp>qntRestante){
                 system("cls");
-                printf("Erro: Não tem esse numero de produtos no estoque!");
+                printf("Erro: Não tem esse numero de produtos no estoque!\n");
                 system("pause");
                 system("cls");
             } else {
@@ -185,31 +194,68 @@ do{
         break;
 
         case 6:
-        arquivoVendas = fopen("vendas.txt", "a");
-
-        if(arquivoVendas == NULL){
-            printf("Erro ao abrir o arquivo.");
+        if(qntVendida<=0){ //Dupla verificação se a quantidade é diferente de 0
+            printf("Erro: A quantidade vendida não pode ser menor ou igual a zero.");
             system("pause");
             system("cls");
+        } else if(idProd == 0){
+            printf("Erro: Escolha um produto para registrar a venda.");
+            system("pause");
+            system("cls");
+        }else {
+            mudar = 1;
+            arquivoVendas = fopen("vendas.txt", "a");
+            arquivoProd = fopen("produtos.txt", "r");
+            //tempVendas
+
+            if(arquivoVendas == NULL){
+                printf("Erro ao abrir o arquivo de vendas.");
+                system("pause");
+                system("cls");
+                erro = 1;
+            }
+
+            if(arquivoProd == NULL){
+                printf("Erro ao abrir o arquivo de produtos.");
+                system("pause");
+                system("cls");
+                erro = 1;
+            }
+
+            while (fgets(linha, sizeof(linha), arquivoProd)) {
+            sscanf(linha, "%d,%49[^,],%d,%f,%f,%f", &id, nome, &qtd, &precoPorUnidade, &desconto, &precoFinal);
+            if(id != idProd){
+                tempVendas = fopen("tempVProd.txt", "a");
+                fprintf(tempVendas,"%d,%s,%d,%0.2f,%0.2f,%0.2f\n", id,nome,qtd,precoPorUnidade,desconto,precoFinal);
+                fclose(tempVendas);
+            } else {
+                qtd = qtd-qntVendida;
+                tempVendas = fopen("tempVProd.txt", "a");
+                fprintf(tempVendas,"%d,%s,%d,%0.2f,%0.2f,%0.2f\n", id,nome,qtd,precoPorUnidade,desconto,precoFinal);
+                fclose(tempVendas);
+            }
         }
 
-        fprintf(arquivoVendas,"%d",idVenda);
-        fprintf(arquivoVendas, ",");
-        fprintf(arquivoVendas,"%d",idProd);
-        fprintf(arquivoVendas, ",");
-        fprintf(arquivoVendas,"%s",nomeProd);
-        fprintf(arquivoVendas, ",");
-        fprintf(arquivoVendas,"%d",qntVendida);
-        fprintf(arquivoVendas, ",");
-        fprintf(arquivoVendas,"%0.2f",precoTotal);
-        fprintf(arquivoVendas, ",");
-        fprintf(arquivoVendas,"%02d,%02d,%02d", dia,mes,ano);
-        fprintf(arquivoVendas, "\n");
-        printf("Registro de venda criado com sucesso!\n");
-        system("pause");
-        system("cls");
+            fprintf(arquivoVendas,"%d",idVenda);
+            fprintf(arquivoVendas, ",");
+            fprintf(arquivoVendas,"%d",idProd);
+            fprintf(arquivoVendas, ",");
+            fprintf(arquivoVendas,"%s",nomeProd);
+            fprintf(arquivoVendas, ",");
+            fprintf(arquivoVendas,"%d",qntVendida);
+            fprintf(arquivoVendas, ",");
+            fprintf(arquivoVendas,"%0.2f",precoTotal);
+            fprintf(arquivoVendas, ",");
+            fprintf(arquivoVendas,"%02d,%02d,%02d", dia,mes,ano);
+            fprintf(arquivoVendas, "\n");
+            printf("Registro de venda criado com sucesso!\n");
+            system("pause");
+            system("cls");
 
-        fclose(arquivoVendas);
+            fclose(arquivoVendas);
+            fclose(arquivoProd);
+        
+        
 
         //Adicionar ao arquivo de vendas a venda atual
         break;
@@ -222,9 +268,23 @@ do{
         system("pause");
         system("cls");
         break;
-    }
-    } while(opcReg != 6 && opcReg != 7);
-}
+
+ } } }while(opcReg != 6 && opcReg != 7);
+
+    if(erro == 0 && mudar == 1){
+                remove("produtos.txt");
+                rename("tempVProd.txt", "produtos.txt");
+                system("cls");
+            } else {
+                remove("tempVProd.txt");
+                system("cls");
+                erro = 0;
+            }
+
+        }
+
+ 
+    
 
 void ConsultaVendas(){
     FILE *arquivoVendas;
@@ -249,6 +309,92 @@ void ConsultaVendas(){
 
 }
 
+
+void DeletarVenda(){
+    int id,qtd;
+    char nome[50];
+    float precoPorUnidade,desconto,precoFinal;
+    FILE *ArquivoProd;
+    FILE *arquivoVendas;
+    FILE *tempVendas;
+    char linha[999];
+    int dia,mes,ano,idVenda,idProd,qntVendida;
+    float precoTotal;
+    char nomeProd[50]={0};
+    int rvendaID=0;
+    int encontrado=0;
+    int confirmRVenda=0;
+    printf("Qual o id da venda que você deseja remover: ");
+    scanf("%d", &rvendaID);
+
+    arquivoVendas = fopen("vendas.txt", "r");
+
+    if(arquivoVendas == NULL){
+        perror("Erro ao abrir o arquivo");
+        system("cls");
+    }
+
+    while (fgets(linha, sizeof(linha), arquivoVendas)) {
+        sscanf(linha, "%d,%d,%49[^,],%d,%f,%d,%d,%d", &idVenda,&idProd, nomeProd, &qntVendida, &precoTotal, &dia, &mes, &ano); //essa bomba lê a linha e organiza cada valor em sua devida variavel.
+    if(rvendaID != idVenda){ //ID de venda diferente do procurado
+        tempVendas = fopen("tempV.txt", "a");
+        fprintf(tempVendas,"%d,%d,%s,%d,%0.2f,%2d,%02d,%02d\n",idVenda,idProd,nomeProd,qntVendida,precoTotal,dia,mes,ano);
+        fclose(tempVendas);
+    } else {
+        encontrado = 1;
+        printf("ID da venda: %d, ID do Produto: %d, Nome do produto: %s, Quantidade vendida: %d, Preço final: %0.2f, Data: %02d/%02d/%02d\n", idVenda,idProd,nomeProd,qntVendida,precoTotal,dia,mes,ano);
+        printf("Tem certeza que deseja remover o seguinte registro de venda (1 - Sim, 2 - Não): ");
+        scanf("%d", &confirmRVenda);
+        switch(confirmRVenda){
+            case 1:
+            ArquivoProd = fopen("produtos.txt", "r");
+            while (fgets(linha, sizeof(linha), ArquivoProd)) {
+            sscanf(linha, "%d,%49[^,],%d,%f,%f,%f", &id, nome, &qtd, &precoPorUnidade, &desconto, &precoFinal);
+            if(id != idProd){ //ID diferente do id da venda escolhida
+                tempVendas = fopen("tempVProd.txt", "a");
+                fprintf(tempVendas,"%d,%s,%d,%0.2f,%0.2f,%0.2f\n", id,nome,qtd,precoPorUnidade,desconto,precoFinal);
+                fclose(tempVendas);
+
+            } else {
+                qtd = qtd+qntVendida;
+                tempVendas = fopen("tempVProd.txt", "a");
+                fprintf(tempVendas,"%d,%s,%d,%0.2f,%0.2f,%0.2f\n", id,nome,qtd,precoPorUnidade,desconto,precoFinal);
+                fclose(tempVendas);
+                }
+
+            }
+
+            fclose(ArquivoProd);
+            break;
+            
+            case 2:
+            confirmRVenda = 0;
+            break;
+        }
+        //Aqui vai remover a venda solicitada
+    }
+    }
+
+    fclose(arquivoVendas);
+    if(encontrado == 1 && confirmRVenda == 1){
+        remove("vendas.txt");
+        rename("tempV.txt", "vendas.txt");
+        remove("produtos.txt");
+        rename("tempVProd.txt", "produtos.txt");
+        encontrado = 0;
+        system("cls");
+        printf("Registro de venda removido com sucesso!\n");
+        system("pause");
+        system("cls");
+    } else {
+        system("cls");//DEPOIS FAZER AQUI UM VERIFICADOR PARA CADA TIPO DE ERRO.
+        printf("Cancelado ou por erro ou por opção do usuario.\n");
+        system("pause");
+        system("cls");
+        remove("tempV.txt");
+    }
+    }
+
 int main(){
     setlocale(LC_ALL,"pt-BR.UTF-8");
     int subOpcao=0;
@@ -258,7 +404,7 @@ int main(){
     printf("1. Consultar vendas\n");
     printf("2. Registrar vendas\n");
     printf("3. Remover venda\n");
-    printf("4. Voltar ao Menu Principal\n");
+    printf("0. Voltar ao Menu Principal\n");
     printf("======================\n");
     printf("Escolha uma opção: ");
     scanf("%d", &subOpcao);
@@ -276,12 +422,20 @@ int main(){
         break;
 
         case 3:
+        DeletarVenda();
+        break;
+
+        case 0:
+        system("cls");
+        printf("Voltando ao menu principal...");
+        system("pause");
+        system("cls");
         break;
 
         default:
         printf("Escolha uma opção valida.\n");
     }
-    } while (subOpcao != 3);
+    }while(subOpcao != 0);
 
     return 0;
 }

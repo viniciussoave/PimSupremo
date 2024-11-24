@@ -387,11 +387,15 @@ void DeletarVenda(){
         system("pause");
         system("cls");
     } else {
-        system("cls");//DEPOIS FAZER AQUI UM VERIFICADOR PARA CADA TIPO DE ERRO.
-        printf("Cancelado ou por erro ou por opção do usuario.\n");
-        system("pause");
         system("cls");
         remove("tempV.txt");
+        if(encontrado == 0){
+            printf("Erro: Registro de venda não encontrado.\n");
+            system("pause");
+            system("cls");
+        }
+
+
     }
     }
 
